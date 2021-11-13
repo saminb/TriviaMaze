@@ -6,14 +6,20 @@ public class TrueFalse extends Question {
 		this.question = theQuestion;
 		this.answer = theAnswer;
 		this.choices = new String[2];
+		this.alreadyAsked = false;
+		this.type = "True_False";
 	}
 	
-	public void askQuestion() {
-		String intro = "True or False: " + question + "\n T, \n F";
-		System.out.println(intro);
+	public String askQuestion() {
+		String myQuestion = "True or False: " + question + "\n T, \n F";
+		return myQuestion;
 	}
 	
-	private boolean processAnswer() {
+	public void setChoice(String theChoice, int theIndex) {
+		choices[theIndex] = theChoice;
+	}
+	
+	public boolean processAnswer() {
 		Scanner console = new Scanner(System.in);
 		int choice = console.nextInt();
 		String correctAns = this.getAnswer();

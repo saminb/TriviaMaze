@@ -1,9 +1,10 @@
 public abstract class Question {
-	private String type;
+	protected String type;
 	protected String question;
 	protected String answer;
 	protected String[] choices;
-	private boolean alreadyAsked;
+	protected boolean alreadyAsked;
+	protected int QID;
 	
 	
 	public String getQuestion() {
@@ -34,5 +35,16 @@ public abstract class Question {
 		return this.alreadyAsked;
 	}
 	
-	abstract void askQuestion();
+	abstract String askQuestion();
+	
+	abstract boolean processAnswer();
+	
+	public int getQID() {
+		return this.QID;
+	}
+	
+	public void setQID(int theQID) {
+		this.QID = theQID;
+	}
+	
 }
