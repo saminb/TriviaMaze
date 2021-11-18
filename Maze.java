@@ -1,4 +1,9 @@
-public class Maze {
+//Doors directions and states are referred to using integers 0-3.
+//For directions: 0 is up, 1 is down, 2 is left, 3 is right
+//For states: 0 is unopened, 1 is opened, 2 is locked, 3 is edge of the maze
+
+
+class Maze {
     private final int height, width;
     private int playerH, playerW;
     private final int goalH, goalW;
@@ -68,13 +73,13 @@ public class Maze {
      * @param myH   vertical coordinate of the room
      * @param myW   horizontal coordinate of the room
      * @param myDir 0 for the upper door, 1 for lower, 2 for left, 3 for right
-     * @return      returns -2 for error, -1 for edge of maze, 0 for unopened door, 1 for opened, 2 for locked
+     * @return      returns -1 for error, 0 for unopened door, 1 for opened, 2 for locked, 3 for edge of maze
      */
     int checkDoor(int myH, int myW, int myDir) {
-        int retVal = -1;
+        int retVal = 3;
 
         if (myH < 0 || myH >= height || myW < 0 || myW >= width || myDir > 3 || myDir < 0) {
-            return -2;
+            return -1;
         }
 
         if (myDir == 0) {
