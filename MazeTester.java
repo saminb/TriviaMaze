@@ -57,18 +57,18 @@ public class MazeTester {
 
     @Test
     public void testCheckDoor() {
-        assertEquals(testMaze.checkDoor(0, 3, 0), -1);
+        assertEquals(testMaze.checkDoor(0, 3, 0), 3);
         assertEquals(testMaze.checkDoor(0, 3, 1), 0);
 
-        assertEquals(testMaze2.checkDoor(0, 0, 0), -1);
+        assertEquals(testMaze2.checkDoor(0, 0, 0), 3);
         assertEquals(testMaze2.checkDoor(0, 0, 1), 0);
-        assertEquals(testMaze2.checkDoor(0, 0, 2), -1);
+        assertEquals(testMaze2.checkDoor(0, 0, 2), 3);
         assertEquals(testMaze2.checkDoor(0, 0, 3), 0);
     }
 
     @Test
     public void testCheckAllDoors() {
-        int[] testArr1 = {-1, 0, -1, 0};
+        int[] testArr1 = {3, 0, 3, 0};
         int[] testArr2 = {0, 0, 0, 0};
         assertArrayEquals(testMaze.checkAllDoors(0, 0), testArr1);
         assertArrayEquals(testMaze.checkAllDoors(1, 1), testArr2);
@@ -76,8 +76,8 @@ public class MazeTester {
 
     @Test
     public void testSetDoors() {
-        int[] testArr1 = {-1, 0, 1, 2};
-        int[] testArr2 = {-1, 0, 0, 1};
+        int[] testArr1 = {3, 0, 1, 2};
+        int[] testArr2 = {3, 0, 0, 1};
         testMaze.setDoor(0, 2, 2, true);
         testMaze.setDoor(0, 2, 3, false);
         assertArrayEquals(testMaze.checkAllDoors(0, 2), testArr1);
