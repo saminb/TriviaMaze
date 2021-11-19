@@ -1,5 +1,3 @@
-package QuestionDatabase;
-
 import java.util.Scanner;
 
 public class ShortAnswer extends Question {
