@@ -1,5 +1,3 @@
-package QuestionDatabase;
-
 public abstract class Question {
 	private String type;
 	private String question;
