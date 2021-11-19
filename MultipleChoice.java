@@ -1,4 +1,3 @@
-package QuestionDatabase;
 import java.util.*;
 
 public class MultipleChoice extends Question {
