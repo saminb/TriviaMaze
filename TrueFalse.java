@@ -1,5 +1,3 @@
-package QuestionDatabase;
-
 import java.util.Scanner;
 
 public class TrueFalse extends Question {
