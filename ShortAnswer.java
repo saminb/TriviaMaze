@@ -6,14 +6,12 @@ public class ShortAnswer extends Question {
 	
 	private String question;
 	private String answer;
-	private boolean alreadyAsked;
-	private String type;
 
-	public ShortAnswer(String theQuestion, String theAnswer) {
-		this.question = theQuestion;
-		this.answer = theAnswer;
-		this.alreadyAsked = false;
-		this.type = "Short_Answer";
+	public ShortAnswer(String QID,String type,String question, String answer) {
+		super(QID,type, question,answer);
+		this.question= question;
+		this.answer= answer;
+		
 	}
 	
 	public String askQuestion() {

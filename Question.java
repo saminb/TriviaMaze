@@ -4,10 +4,15 @@ public abstract class Question {
 	private String type;
 	private String question;
 	private String answer;
-	private boolean alreadyAsked;
 	private String QID;
 	
-	
+	public Question(String QID,String type,String question, String answer) {
+		this.type 		= type;
+        this.question 	= question;
+        this.answer 	= answer;
+        this.QID		= QID;
+    }
+
 	public String getQuestion() {
 		return this.question;
 	}
@@ -27,18 +32,6 @@ public abstract class Question {
 	public String getType() {
 		return this.type;
 	}
-	
-	public void setAsAsked() {
-		this.alreadyAsked = true;
-	}
-	
-	public boolean getAskedStatus() {
-		return this.alreadyAsked;
-	}
-	
-	abstract String askQuestion();
-	
-	abstract boolean processAnswer();
 	
 	public String getQID() {
 		return this.QID;

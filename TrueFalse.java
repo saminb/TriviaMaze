@@ -4,18 +4,13 @@ import java.util.Scanner;
 
 public class TrueFalse extends Question {
 
+	private String[] theChoices;
 	private String question;
-	private String[] choices;
-	private String answer;
-	private boolean alreadyAsked;
-	private String type;
 
-	public TrueFalse(String theQuestion, String theAnswer, String[] theChoices) {
-		this.question = theQuestion;
-		this.answer = theAnswer;
-		this.choices = new String[2];
-		this.alreadyAsked = false;
-		this.type = "True_False";
+	public TrueFalse(String QID,String type,String question, String answer, String[] trueFalseChoices) {
+		super(QID,type, question,answer);
+		this.theChoices = new String[2];
+		this.question= question;
 	}
 	
 	public String askQuestion() {
@@ -23,8 +18,11 @@ public class TrueFalse extends Question {
 		return myQuestion;
 	}
 	
-	public void setChoice(String theChoice, int theIndex) {
-		choices[theIndex] = theChoice;
+	public String[] getTrueFalseChoices() {
+		return theChoices;
+	}
+	public void setTrueFalseChoice(String trueFalseChoices, int theIndex) {
+		theChoices[theIndex] = trueFalseChoices;
 	}
 	
 	public boolean processAnswer() {
@@ -43,5 +41,6 @@ public class TrueFalse extends Question {
 			return true;
 		}
 	}
+
 	
 }

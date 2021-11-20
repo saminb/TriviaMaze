@@ -2,37 +2,30 @@ package QuestionDatabase;
 import java.util.*;
 
 public class MultipleChoice extends Question {
-
-	private String answer;
+	private String[] theChoices;
 	private String question;
-	private String[] choices;
-	private boolean alreadyAsked;
-	private String type;
 
-	public MultipleChoice(String theQuestion, String theAnswer, String[] theChoices) {
-		this.question = theQuestion;
-		this.answer = theAnswer;
-		this.choices = new String[4];
-		this.alreadyAsked = false;
-		this.type = "Multiple_Choice";
+	public MultipleChoice(String QID,String type,String question, String answer, String[] choices) {
+		super(QID,type, question,answer);
+		this.theChoices = new String[4];
+		this.question= question;
 	}
 	
-	public void setChoice(String theChoice, int theIndex) {
-		choices[theIndex] = theChoice;
+	public void setChoice(String choices, int theIndex) {
+		theChoices[theIndex] = choices;
 	}
 	
 	public String[] getChoices() {
-		return choices;
+		return theChoices;
 	}
 	
 	public String askQuestion() {
-		String myQuestion = question + " 1): "; // How do we want to display the choices?
-												// Should the answer be doubly present?
+		String myQuestion = question + " 1): "; 
 		return myQuestion;
 	}
 	
 	public boolean processAnswer() {
-		Scanner console = new Scanner(System.in); // Should MC questions be an int or a string?
+		Scanner console = new Scanner(System.in);
 		int choice = console.nextInt();
 		return false;
 		
