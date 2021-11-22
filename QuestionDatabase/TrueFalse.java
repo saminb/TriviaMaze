@@ -10,6 +10,8 @@ public class TrueFalse extends Question {
 	public TrueFalse(String QID,String type,String question, String answer, String[] trueFalseChoices) {
 		super(QID,type, question,answer);
 		this.theChoices = new String[2];
+		theChoices[0] = "True";
+		theChoices[1] = "False";
 		this.question= question;
 	}
 	
@@ -18,28 +20,20 @@ public class TrueFalse extends Question {
 		return myQuestion;
 	}
 	
-	public String[] getTrueFalseChoices() {
+	public String[] getChoices() {
 		return theChoices;
 	}
 	public void setTrueFalseChoice(String trueFalseChoices, int theIndex) {
 		theChoices[theIndex] = trueFalseChoices;
 	}
 	
-	public boolean processAnswer() {
-		Scanner console = new Scanner(System.in);
-		int choice = console.nextInt();
-		String correctAns = this.getAnswer();
-		if (choice == 1) {
-			if (correctAns.equals("True")) {
-				return true;
-			}
-			return false;
-		} else {
-			if (correctAns.equals("False")) {
-				return false;
-			}
+	public boolean processAnswer(String theAnswer) {
+		if (theAnswer == this.getAnswer()) {
+			this.setAnsweredResult(true);
 			return true;
 		}
+		this.setAnsweredResult(false);
+		return false;
 	}
 
 	

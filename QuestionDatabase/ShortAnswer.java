@@ -3,14 +3,9 @@ package QuestionDatabase;
 import java.util.Scanner;
 
 public class ShortAnswer extends Question {
-	
-	private String question;
-	private String answer;
 
-	public ShortAnswer(String QID,String type,String question, String answer) {
-		super(QID,type, question,answer);
-		this.question= question;
-		this.answer= answer;
+	public ShortAnswer(String theQID,String theType,String theQuestion, String theAnswer) {
+		super(theQID, theType, theQuestion, theAnswer);
 		
 	}
 	

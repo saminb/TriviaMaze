@@ -5,12 +5,15 @@ public abstract class Question {
 	private String question;
 	private String answer;
 	private String QID;
+	private boolean hasBeenAsked;
+	private boolean answeredCorrectly;
 	
 	public Question(String QID,String type,String question, String answer) {
 		this.type 		= type;
         this.question 	= question;
         this.answer 	= answer;
         this.QID		= QID;
+        hasBeenAsked = false;
     }
 
 	public String getQuestion() {
@@ -40,6 +43,23 @@ public abstract class Question {
 	public void setQID(String theQID) {
 		this.QID = theQID;
 	}
+	
+	public void setAsked() {
+		this.hasBeenAsked = true;
+	}
+	
+	public boolean getAsked() {
+		return this.hasBeenAsked;
+	}
+	
+	public void setAnsweredResult(boolean theResult) {
+		this.answeredCorrectly = theResult;
+	}
+	
+	public boolean getAnsweredResult() {
+		return this.answeredCorrectly;
+	}
+	
 
 	
 }
