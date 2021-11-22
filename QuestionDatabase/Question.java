@@ -8,6 +8,15 @@ public abstract class Question {
 	private boolean hasBeenAsked;
 	private boolean hasCorrectAnswer;
 	
+	/**
+	 * Abstract constructor for the Question object with the given parameters.
+	 * Initializes 
+	 * 
+	 * @param theQID		The unique ID of the question.
+	 * @param theType		The type of the question (TF, MC, SA).
+	 * @param theQuestion	The actual question to be asked.
+	 * @param theAnswer		The answer to the question.
+	 */
 	public Question(String theQID,String theType,String theQuestion, String theAnswer) {
 		this.myType 	= theType;
         this.myQuestion = theQuestion;

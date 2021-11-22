@@ -1,11 +1,8 @@
 package QuestionDatabase;
 
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import java.util.*;
 
 public class SAQuestionGUI extends JFrame {
 	private JFrame myFrame;
@@ -16,30 +13,32 @@ public class SAQuestionGUI extends JFrame {
 	}
 	
 	private void initComponents(ShortAnswer theQuestion) {
-		myFrame.setSize(500, 200);
-		setResizable(false);
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		myFrame = new JFrame("Short Answer Question");
+		myFrame.setSize(600, 300);
+		myFrame.setResizable(false);
+		myFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
-		setTitle("Question Dialog");
 		
 		myPanel = new JPanel();
-		
-		setContentPane(myPanel);
 		myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.PAGE_AXIS));
 		
 		JLabel question = new JLabel();
 		question.setText(theQuestion.getQuestion());
 		EmptyBorder whitespace = new EmptyBorder(5, 5, 20, 10);
 		question.setBorder(whitespace);
-		add(question);
-		setVisible(true);
+		myPanel.add(question);
 		initializeInput(theQuestion);
+		
+		myFrame.add(myPanel);
+		myFrame.setVisible(true);
 		
 	}
 	
 	public void initializeInput(ShortAnswer theQuestion) { // Abstract away?
 		JTextField input = new JTextField();
+		myPanel.add(input);
 		JButton submitButton = new JButton("Submit");
+		myPanel.add(Box.createVerticalGlue());
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Make it so submit can only be pressed if a radio option is selected/handle error for no selection
@@ -52,7 +51,9 @@ public class SAQuestionGUI extends JFrame {
 	}
 	
 	private void showAnswerGUI(boolean isCorrect, Question theQuestion) { // Abstract away?
-		myPanel.removeAll();
+		myPanel.setVisible(false);
+		JPanel postPanel = new JPanel();
+		postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.PAGE_AXIS));
 		JLabel text = new JLabel();
 		if (isCorrect) {
 			text.setText("Congratulations! You chose the correct answer.");
@@ -65,6 +66,12 @@ public class SAQuestionGUI extends JFrame {
 				myFrame.dispose();
 			}
 		});
+		
+		postPanel.add(text);
+		postPanel.add(continueButton);
+		
+		myFrame.add(postPanel);
+		myFrame.setVisible(true);
 	}
 	
 }

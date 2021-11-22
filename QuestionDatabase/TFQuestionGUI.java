@@ -1,39 +1,36 @@
 package QuestionDatabase;
 
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import java.util.*;
-
 public class TFQuestionGUI extends JFrame {
-	private JFrame frame;
-	private JPanel panel;
+	private JFrame myFrame;
+	private JPanel myPanel;
 	
 	public TFQuestionGUI(TrueFalse theQuestion) {
 		initComponents(theQuestion);
 	}
 	
 	private void initComponents(TrueFalse theQuestion) {
-		frame.setSize(500, 200);
-		setResizable(false);
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setLocationRelativeTo(null);
-		setTitle("Question Dialog");
+		myFrame = new JFrame("True or False Question");
+		myFrame.setSize(500, 200);
+		myFrame.setResizable(false);
+		myFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		myFrame.setLocationRelativeTo(null);
 		
-		panel = new JPanel();
-		
-		setContentPane(panel);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		myPanel = new JPanel();
+		myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.PAGE_AXIS));
 		
 		JLabel question = new JLabel();
 		question.setText(theQuestion.getQuestion());
 		EmptyBorder whitespace = new EmptyBorder(5, 5, 20, 10);
 		question.setBorder(whitespace);
-		add(question);
-		setVisible(true);
+		myPanel.add(question);
 		initializeButtons(theQuestion);
+		
+		myFrame.add(myPanel);
+		myFrame.setVisible(true);
 		
 	}
 	
@@ -43,10 +40,11 @@ public class TFQuestionGUI extends JFrame {
 		for (int i = 0; i < answerChoices.length; i++) {
 			JRadioButton answer = new JRadioButton(answerChoices[i]);
 			group.add(answer);
-			panel.add(answer);
+			myPanel.add(answer);
 			answer.setActionCommand(answerChoices[i]);
 		}
 		JButton submitButton = new JButton("Submit");
+		myPanel.add(Box.createVerticalGlue());
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Make it so submit can only be pressed if a radio option is selected/handle error for no selection
@@ -55,11 +53,13 @@ public class TFQuestionGUI extends JFrame {
 				showAnswerGUI(isCorrect, theQuestion);
 			}
 		});
-		panel.add(submitButton);
+		myPanel.add(submitButton);
 	}
 	
 	private void showAnswerGUI(boolean isCorrect, Question theQuestion) { // Abstract away?
-		panel.removeAll();
+		myPanel.setVisible(false);
+		JPanel postPanel = new JPanel();
+		postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.PAGE_AXIS));
 		JLabel text = new JLabel();
 		if (isCorrect) {
 			text.setText("Congratulations! You chose the correct answer.");
@@ -69,8 +69,14 @@ public class TFQuestionGUI extends JFrame {
 		JButton continueButton = new JButton("Continue");
 		continueButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
+				myFrame.dispose();
 			}
 		});
+		
+		postPanel.add(text);
+		postPanel.add(continueButton);
+		
+		myFrame.add(postPanel);
+		myFrame.setVisible(true);
 	}
 }
