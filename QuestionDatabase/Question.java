@@ -1,47 +1,47 @@
 package QuestionDatabase;
 
 public abstract class Question {
-	private String type;
-	private String question;
-	private String answer;
-	private String QID;
+	private String myType;
+	private String myQuestion;
+	private String myAnswer;
+	private String myQID;
 	private boolean hasBeenAsked;
-	private boolean answeredCorrectly;
+	private boolean hasCorrectAnswer;
 	
-	public Question(String QID,String type,String question, String answer) {
-		this.type 		= type;
-        this.question 	= question;
-        this.answer 	= answer;
-        this.QID		= QID;
+	public Question(String theQID,String theType,String theQuestion, String theAnswer) {
+		this.myType 	= theType;
+        this.myQuestion = theQuestion;
+        this.myAnswer 	= theAnswer;
+        this.myQID		= theQID;
         hasBeenAsked = false;
     }
 
 	public String getQuestion() {
-		return this.question;
+		return this.myQuestion;
 	}
 	
 	public String getAnswer() {
-		return this.answer;
+		return this.myAnswer;
 	}
 	
 	public void setQuestion(String theQuestion) {
-		this.question = theQuestion;
+		this.myQuestion = theQuestion;
 	}
 	
 	public void setAnswer(String theAnswer) {
-		this.answer = theAnswer;
+		this.myAnswer = theAnswer;
 	}
 	
 	public String getType() {
-		return this.type;
+		return this.myType;
 	}
 	
 	public String getQID() {
-		return this.QID;
+		return this.myQID;
 	}
 	
 	public void setQID(String theQID) {
-		this.QID = theQID;
+		this.myQID = theQID;
 	}
 	
 	public void setAsked() {
@@ -53,13 +53,22 @@ public abstract class Question {
 	}
 	
 	public void setAnsweredResult(boolean theResult) {
-		this.answeredCorrectly = theResult;
+		this.hasCorrectAnswer = theResult;
 	}
 	
 	public boolean getAnsweredResult() {
-		return this.answeredCorrectly;
+		return this.hasCorrectAnswer;
 	}
 	
-
+	public boolean processAnswer(String theAnswer) {
+		if (theAnswer == this.getAnswer()) {
+			this.setAnsweredResult(true);
+			return true;
+		}
+		this.setAnsweredResult(false);
+		return false;
+	}
+	
+	public abstract void askQuestion();
 	
 }

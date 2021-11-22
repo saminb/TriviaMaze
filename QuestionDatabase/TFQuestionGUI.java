@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import java.util.*;
 
 public class TFQuestionGUI extends JFrame {
+	private JFrame frame;
 	private JPanel panel;
 	
 	public TFQuestionGUI(TrueFalse theQuestion) {
@@ -15,7 +16,7 @@ public class TFQuestionGUI extends JFrame {
 	}
 	
 	private void initComponents(TrueFalse theQuestion) {
-		setSize(500, 200);
+		frame.setSize(500, 200);
 		setResizable(false);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -51,9 +52,25 @@ public class TFQuestionGUI extends JFrame {
 				// Make it so submit can only be pressed if a radio option is selected/handle error for no selection
 				String answer = group.getSelection().getActionCommand();
 				boolean isCorrect = theQuestion.processAnswer(answer); // processAnswer will set the Question Object's answeredCorrectly field to true or false, which is how we will send it back to mazeframe
+				showAnswerGUI(isCorrect, theQuestion);
 			}
 		});
 		panel.add(submitButton);
 	}
 	
+	private void showAnswerGUI(boolean isCorrect, Question theQuestion) { // Abstract away?
+		panel.removeAll();
+		JLabel text = new JLabel();
+		if (isCorrect) {
+			text.setText("Congratulations! You chose the correct answer.");
+		} else {
+			text.setText("Oops. You chose the wrong answer. The correct answer is: " + theQuestion.getAnswer());
+		}
+		JButton continueButton = new JButton("Continue");
+		continueButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+	}
 }
