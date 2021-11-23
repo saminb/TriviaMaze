@@ -49,7 +49,11 @@ public class MCQuestionGUI extends JFrame {
 				// Make it so submit can only be pressed if a radio option is selected/handle error for no selection
 				String answer = group.getSelection().getActionCommand();
 				boolean isCorrect = theQuestion.processAnswer(answer);
+				Object [] log = new Object[] { theQuestion,answer};
+				QuestionLog questionLog = new QuestionLog();
+				questionLog.setLog(log);
 				showAnswerGUI(isCorrect, theQuestion);
+				
 			}
 		});
 		myPanel.add(submitButton);
