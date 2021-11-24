@@ -127,9 +127,8 @@ public abstract class Question {
 		return false;
 	}
 	
-	/**
-	 * Constructs the question GUI and prompts the user with a question and answer.
-	 */
+	public abstract void askQuestion(QuestionLog questionLog);
+	
 	public abstract void askQuestion();
 	
 }

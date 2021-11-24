@@ -12,6 +12,7 @@ public class MultipleChoice extends Question {
 	 * @param theQuestion	The actual question to be asked.
 	 * @param theAnswer		The answer to the question.
 	 * @param theChoices	The possible answers to choose from.
+	 * @param questionLog 
 	 */
 	public MultipleChoice(String theQID, String theType, String theQuestion, String theAnswer, String[] theChoices) {
 		super(theQID,theType, theQuestion, theAnswer);
@@ -38,9 +39,15 @@ public class MultipleChoice extends Question {
 	/** 
 	 * Opens the question GUI for a MC Question and updates the Question's properties. Labels the question as asked.
 	 */
-	public void askQuestion() {
-		MCQuestionGUI questionGUI = new MCQuestionGUI(this);
+	public void askQuestion( QuestionLog questionLog) {
+		MCQuestionGUI questionGUI = new MCQuestionGUI(this, questionLog);
 		this.setAsked();
+		
+	}
+
+	@Override
+	public void askQuestion() {
+		// TODO Auto-generated method stub
 		
 	}
 	
