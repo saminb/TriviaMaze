@@ -3,16 +3,20 @@ package QuestionDatabase;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 public class MCQuestionGUI extends JFrame {
 	private JFrame myFrame;
 	private JPanel myPanel;
+	private QuestionLog questionLog;
 	
-	public MCQuestionGUI(MultipleChoice theQuestion) {
-		initComponents(theQuestion);
+	public MCQuestionGUI(MultipleChoice theQuestion,  QuestionLog questionLog) {
+		initComponents(theQuestion, questionLog);
 	}
 	
-	private void initComponents(MultipleChoice theQuestion) {
+	private void initComponents(MultipleChoice theQuestion, QuestionLog questionLog) {
+		
+		this.questionLog = questionLog;
 		myFrame = new JFrame("Multiple Choice Question");
 		myFrame.setSize(600, 300);
 		myFrame.setResizable(false);
@@ -48,13 +52,13 @@ public class MCQuestionGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// Make it so submit can only be pressed if a radio option is selected/handle error for no selection
 				String answer = group.getSelection().getActionCommand();
+				Object[] data= {theQuestion.getQuestion(),answer};
+				questionLog.addData(data);
 				boolean isCorrect = theQuestion.processAnswer(answer);
-				Object [] log = new Object[] { theQuestion,answer};
-				QuestionLog questionLog = new QuestionLog();
-				questionLog.setLog(log);
 				showAnswerGUI(isCorrect, theQuestion);
 				
 			}
+
 		});
 		myPanel.add(submitButton);
 	}

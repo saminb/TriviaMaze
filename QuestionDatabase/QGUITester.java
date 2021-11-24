@@ -24,6 +24,8 @@ public class QGUITester {
 	}
 	
 	public static void MCTest() {
+		
+		QuestionLog questionLog = new QuestionLog();
 		String[] testMCChoices = new String[4];
 		testMCChoices[0] = "four";
 		testMCChoices[1] = "two";
@@ -35,7 +37,7 @@ public class QGUITester {
 		for (String s: theChoices) {
 			System.out.println(s);
 		}*/
-		testMCQ.askQuestion(); //Ask question is void because the way the response is handled is that
+		testMCQ.askQuestion(questionLog); //Ask question is void because the way the response is handled is that
 							   // The question object's answered correctly field is updated.1
 	}
 	
