@@ -2,7 +2,7 @@ package QuestionDatabase;
 
 public class MultipleChoice extends Question {
 	
-	// List of answer choices for this questin.
+	// List of answer choices for this question.
 	private String[] myChoices;
 
 	/** Constructs a Multiple Choice Question Object with the given parameters:
