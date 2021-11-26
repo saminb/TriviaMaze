@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class QuestionLog {
 	private DefaultTableModel qTableModel;
-	private static JTable logTable;
+	private JTable logTable;
 	private JFrame questionLogFrame;
 	private JPanel questionLogPanel;
 	/**
@@ -23,24 +23,26 @@ public class QuestionLog {
 		questionLogPanel= new JPanel();
 		String[] columnNames= {"Questions", "Your Answers"};
 		this.qTableModel= new DefaultTableModel(columnNames,0);
-		logTable= new JTable(qTableModel);
+		logTable= new JTable(this.qTableModel);
 		questionLogFrame.setTitle("Question Log");
-		questionLogFrame.getContentPane().add(questionLogPanel);
+		questionLogFrame.setContentPane(questionLogPanel);
 		questionLogFrame.setSize(500,500);
 		questionLogFrame.setVisible(true);
-		logTable.setBounds(30, 40, 200, 300);
+		logTable.setBounds(10, 10, 10, 10);
 		questionLogPanel.setBorder(BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Question Log", TitledBorder.CENTER, TitledBorder.TOP));
-		questionLogFrame.getContentPane().add(new JScrollPane(logTable));
-	}
+		questionLogPanel.add(logTable);
+		String[] test = {"I hate this?","True"};
+		qTableModel.addRow(test);
+		logTable.setModel(qTableModel);
+		}
     public void addData(Object[] data)
     {
 //		qTableModel = (DefaultTableModel)logTable.getModel();
-    	logTable.setAutoCreateColumnsFromModel(true);
-        this.qTableModel.addRow(data);
-        System.out.println("data is now added to the qTable");
-        System.out.println(qTableModel.getColumnCount());
+        logTable.setAutoCreateColumnsFromModel(true);
+    	this.qTableModel.addRow(data);
         logTable.setModel(this.qTableModel);
-        
+        System.out.println("data is now added to the qTable");
+        System.out.println(this.qTableModel.getDataVector());
     }   
     public static void main(String[] arg) throws Exception {
     	new QuestionLog();
