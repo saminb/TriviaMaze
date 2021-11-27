@@ -2,8 +2,9 @@
 //For directions: 0 is up, 1 is down, 2 is left, 3 is right
 //For states: 0 is unopened, 1 is opened, 2 is locked, 3 is edge of the maze
 
+import java.io.Serializable;
 
-class Maze {
+class Maze implements Serializable {
     private final int height, width;
     private int playerH, playerW;
     private final int goalH, goalW;
