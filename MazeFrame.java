@@ -1,12 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
-
 public class MazeFrame extends JFrame implements ActionListener {
 
+    private static final String FILENAME = "SavedMaze.ser";
     private Maze myMaze;
 
     private JPanel roomView, textView, textViewL;
@@ -14,9 +15,9 @@ public class MazeFrame extends JFrame implements ActionListener {
     private JButton upButton, downButton, leftButton, rightButton, player;
     private ImageIcon lock, wall, wrong, blank;
     private ImageIcon[] goDir, playerSprites;
-    private JMenuItem newGame, saveGame, loadGame, exit, about, instructions, cheats;
+    private JMenuItem newGame, saveGame, loadGame, exit, about, instructions, questionLog, cheats;
 
-    private boolean gameOver = false;
+    private boolean gameOver = true;
     private boolean vertMove = false;
     private boolean cheatsOn = false;
 
@@ -67,8 +68,6 @@ public class MazeFrame extends JFrame implements ActionListener {
         textViewL.setBounds(30, 390, 540, 25);
         textViewL.setBackground(Color.lightGray);
         textViewL.add(flavorTextL);
-
-        beginGame();
     }
 
     private void initializeButtons() {
@@ -94,27 +93,27 @@ public class MazeFrame extends JFrame implements ActionListener {
         upButton = new JButton();
         upButton.setBounds(225,25,50,50);
         upButton.addActionListener(this);
-        upButton.setIcon(lock);
+        upButton.setIcon(blank);
 
         downButton = new JButton();
         downButton.setBounds(225,225,50,50);
         downButton.addActionListener(this);
-        downButton.setIcon(lock);
+        downButton.setIcon(blank);
 
         leftButton = new JButton();
         leftButton.setBounds(25,125,50,50);
         leftButton.addActionListener(this);
-        leftButton.setIcon(lock);
+        leftButton.setIcon(blank);
 
         rightButton = new JButton();
         rightButton.setBounds(425,125,50,50);
         rightButton.addActionListener(this);
-        rightButton.setIcon(lock);
+        rightButton.setIcon(blank);
 
         player = new JButton();
-        player.setIcon(playerSprites[0]);
         player.setBounds(200, 100, 100, 100);
         player.addActionListener(this);
+        player.setIcon(playerSprites[0]);
     }
 
     private void initializeMenu() {
@@ -133,7 +132,8 @@ public class MazeFrame extends JFrame implements ActionListener {
         exit     		= new JMenuItem("Exit");
         about    		= new JMenuItem("About");
         instructions    = new JMenuItem("Game Instruction");
-        cheats           = new JMenuItem("Cheats");
+        questionLog     = new JMenuItem("Question Log");
+        cheats          = new JMenuItem("Cheats");
 
         file.add(newGame);
         file.add(saveGame);
@@ -141,6 +141,7 @@ public class MazeFrame extends JFrame implements ActionListener {
         file.add(exit);
         help.add(about);
         help.add(instructions);
+        help.add(questionLog);
         help.add(cheats);
 
         newGame.addActionListener(this);
@@ -149,6 +150,7 @@ public class MazeFrame extends JFrame implements ActionListener {
         exit.addActionListener(this);
         about.addActionListener(this);
         instructions.addActionListener(this);
+        questionLog.addActionListener(this);
         cheats.addActionListener(this);
     }
 
@@ -172,20 +174,16 @@ public class MazeFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == upButton && !gameOver) {
-            vertMove = true;
-            attemptMove(0);
+            EventDoorClick(0);
         }
         else if (e.getSource() == downButton && !gameOver) {
-            vertMove = true;
-            attemptMove(1);
+            EventDoorClick(1);
         }
         else if (e.getSource() == leftButton && !gameOver) {
-            vertMove = false;
-            attemptMove(2);
+            EventDoorClick(2);
         }
         else if (e.getSource() == rightButton && !gameOver) {
-            vertMove = false;
-            attemptMove(3);
+            EventDoorClick(3);
         }
 
         else if (e.getSource() == player && !gameOver) {
@@ -193,96 +191,38 @@ public class MazeFrame extends JFrame implements ActionListener {
             cycleText();
         }
 
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
         else if (e.getSource() == newGame) {
-            beginGame();
+            EventBegin();
         }
-        else if (e.getSource() == saveGame) {
-            setText("Save current game to a file", "(i'll have to confirm with the professor about serialization)");
+        else if (e.getSource() == saveGame && !gameOver) {
+            EventSave();
         }
         else if (e.getSource() == loadGame) {
-            setText("Load game from a file", "(i'll have to confirm with the professor about serialization)");
+            EventLoad();
         }
         else if (e.getSource() == exit) {
-            setText("Closing...", "");
-            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            EventExit();
         }
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
         else if (e.getSource() == about) {
-            setText("Display information about program", "(this feature hasn't been implemented yet)");
+            EventAbout();
         }
         else if (e.getSource() == instructions) {
-            setText("Display instructions for the game", "(this feature hasn't been implemented yet)");
+            EventInstructions();
+        }
+        else if (e.getSource() == questionLog) {
+            EventLog();
         }
         else if (e.getSource() == cheats && !gameOver) {
-            if (cheatsOn) {
-                cheatsOn = false;
-                setText("As suddenly as it appeared, the power seems to fade...", "Cheat mode deactivated.");
-                player.setIcon(playerSprites[0]);
-            } else {
-                cheatsOn = true;
-                setText("Just when all hope seemed lost, you felt an incredible power!", "Cheat mode activated.");
-                player.setIcon(playerSprites[5]);
-            }
+            EventToggleCheat();
         }
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    private void attemptMove(int Dir) {
-        int myH = myMaze.getPlayerH();
-        int myW = myMaze.getPlayerW();
-        int state = myMaze.checkDoor(myH, myW, Dir);
-        boolean missedAnswer = false;
-
-        if (state == 0) {
-            if (cheatsOn) {
-                setText("Focusing your power into a laser, you cut through the door in seconds!", "How wondrous...");
-                myMaze.setDoor(myH, myW, Dir, true);
-            } else {
-                setText("For no reason whatsoever, the door suddenly locked.", "");
-                missedAnswer = true;
-                myMaze.setDoor(myH, myW, Dir, false);
-            }
-        }
-        else if (state == 1) {
-            if (Dir == 0) {
-                myMaze.setPlayerPosition(myH - 1, myW);
-            } else if (Dir == 1) {
-                myMaze.setPlayerPosition(myH + 1, myW);
-            } else if (Dir == 2) {
-                myMaze.setPlayerPosition(myH, myW - 1);
-            } else if (Dir == 3) {
-                myMaze.setPlayerPosition(myH, myW + 1);
-            }
-            cycleText();
-        }
-        else if (state == 2) {
-            if (cheatsOn) {
-                setText("Focusing your power into a laser, you cut through the door in seconds!", "How wondrous...");
-                myMaze.setDoor(myH, myW, Dir, true);
-            } else {
-                setText("The door locked when you answered its question wrong.", "You'll have to find another way.");
-            }
-        }
-        else {
-            setText("That's a wall.", "If only you'd taken that \"Phasing Through Walls\" class in college.");
-        }
-
-        if (cheatsOn) {
-            player.setIcon(playerSprites[5]);
-        } else {
-            player.setIcon(playerSprites[0]);
-        }
-
-        updateDoorIcons();
-        if(myMaze.isSolved()) {
-            gameWon();
-        } else if (missedAnswer) {
-            if (!myMaze.solvable(myH, myW)) {
-                gameLost();
-            }
-        }
-
-    }
 
     private void updateDoorIcons() {
         if (myMaze == null) {
@@ -328,7 +268,153 @@ public class MazeFrame extends JFrame implements ActionListener {
         flavorTextL.setText(msgL);
     }
 
-    private void beginGame() {
+    private void cycleText() {
+        //This array contains all the game's flavor text. I'll keep filling this out.
+        String[] allText = {
+                "There is a pensive feeling in the air...", "",
+                "There is an egotistical feeling in the air...", "",
+                "There is a quizzacious feeling in the air...", "",
+                "There is a conspiratorial feeling in the air...", "",
+                "You feel like you are likely to be eaten by a grue.", "You're not, but it feels that way",
+                "You feel like you're being watched.", "Your captors surely have hidden cameras to supervise your progress.",
+                "You feel hungry.", "If you knew you were going to be captured, you'd have eaten a bigger lunch.",
+                "You feel like it would be wise to identify the edges of the maze.", "",
+                "You feel the cool labyrinth air against your bare head.", "\"Hey, where's my hat??\"",
+                "You plan to lodge a strongly-worded complaint with your captors.", "After you escape, of course.",
+                "You recall a legend you once heard...", "They say some people can unlock superpowers when stressed.",
+                "The hear the florescent lights in the ceiling buzz quietly.", "",
+                "You notice your headache's going away.", "That's good, at least.",
+                "You look around for any vents big enough to crawl through.", "...Nope.",
+                "You stare at your hands... it's not often you really look at your hands.", "How long has that mole been there?",
+                "You thought, for a second, that you saw a strange glowing orb.", "Probably just your imagination."};
+
+        //returns a random number from 0 to 29
+        int i = (int) (Math.random() * 30);
+
+        //if i is 25 - 29, you will learn some of your current coordinates.
+        //if i is 20 - 24, you will learn some of the exit's coordinates.
+        //if i is 18 - 19, you will learn how far you are from the exit.
+        //if i is 17, you will learn how far you are from the exit vertically.
+        //if i is 16, you will learn how far you are from the exit vertically.
+        //if i is anywhere from 0 to 15, it will display random flavor text.
+        if (i >= 25) {
+            if (vertMove) {
+                setText("You feel like you're in row " + (myMaze.getPlayerH() + 1) + "...", "");
+            } else {
+                setText("You feel like you're in column " + (myMaze.getPlayerW() + 1) + "...", "");
+            }
+        }
+        else if (i >= 20) {
+            if (vertMove) {
+                setText("Somehow, you know that the exit is in row " + (myMaze.getGoalH() + 1) + "...", "");
+            } else {
+                setText("Somehow, you know that the exit is in column " + (myMaze.getGoalW() + 1) + "...", "");
+            }
+        }
+        else if (i >= 18) {
+            int distH = Math.abs(myMaze.getPlayerH() - myMaze.getGoalH());
+            int distW = Math.abs(myMaze.getPlayerW() - myMaze.getGoalW());
+            setText("Somehow, you know that you're " + (distH + distW) + " moves from the exit...", "");
+        }
+        else if (i == 17) {
+            int distH = myMaze.getPlayerH() - myMaze.getGoalH();
+            if (distH == 0) {
+                setText("Somehow, you know that you're in the same row as the goal.", "");
+            } else {
+                setText("Somehow, you know that you're " + Math.abs(distH) + " rows away from the goal.", "");
+            }
+        }
+        else if (i == 16) {
+            int distW = myMaze.getPlayerW() - myMaze.getGoalW();
+            if (distW == 0) {
+                setText("Somehow, you know that you're in the same column as the goal.", "");
+            } else {
+                setText("Somehow, you know that you're " + Math.abs(distW) + " columns away from the goal.", "");
+            }
+        }
+        else {
+            setText(allText[i*2], allText[(i*2) + 1]);
+        }
+    }
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    private void EventDoorClick(int Dir) {
+        vertMove = (Dir == 0 || Dir == 1);
+
+        int myH = myMaze.getPlayerH();
+        int myW = myMaze.getPlayerW();
+        int state = myMaze.checkDoor(myH, myW, Dir);
+        boolean rightAnswer = true;
+
+        if (state == 0) {
+            if (cheatsOn) {
+                setText("Focusing your power into a laser, you cut through the door in seconds!", "How wondrous...");
+                myMaze.setDoor(myH, myW, Dir, true);
+            } else {
+                //The logic for calling and answering a question goes here.
+                //Right now, it's set up as if you always get the answer wrong.
+                setText("For no reason whatsoever, the door suddenly locked.", "");
+                rightAnswer = false;
+                myMaze.setDoor(myH, myW, Dir, false);
+            }
+        }
+        else if (state == 1) {
+            if (Dir == 0) {
+                myMaze.setPlayerPosition(myH - 1, myW);
+            } else if (Dir == 1) {
+                myMaze.setPlayerPosition(myH + 1, myW);
+            } else if (Dir == 2) {
+                myMaze.setPlayerPosition(myH, myW - 1);
+            } else if (Dir == 3) {
+                myMaze.setPlayerPosition(myH, myW + 1);
+            }
+            cycleText();
+        }
+        else if (state == 2) {
+            if (cheatsOn) {
+                setText("Focusing your power into a laser, you cut through the door in seconds!", "How wondrous...");
+                myMaze.setDoor(myH, myW, Dir, true);
+            } else {
+                setText("The door locked when you answered its question wrong.", "You'll have to find another way.");
+            }
+        }
+        else {
+            setText("That's a wall.", "If only you'd taken that \"Phasing Through Walls\" class in college.");
+        }
+
+        if (cheatsOn) {
+            player.setIcon(playerSprites[5]);
+        } else {
+            player.setIcon(playerSprites[0]);
+        }
+
+        updateDoorIcons();
+        if(myMaze.isSolved()) {
+            EvenVictory();
+        } else if (!rightAnswer) {
+            if (!myMaze.solvable(myH, myW)) {
+                EventDefeat();
+            }
+        }
+
+    }
+
+    private void EvenVictory() {
+        gameOver = true;
+        player.setIcon(playerSprites[3]);
+        setText("You've escaped! Now you can return to your people on the mothership!",
+                "But the burden of useless trivia may never leave you...");
+    }
+
+    private void EventDefeat() {
+        gameOver = true;
+        player.setIcon(playerSprites[2]);
+        setText("You're trapped in the maze... there's nowhere to go from here.",
+                "Your captors will continue to test you until you can answer correctly.");
+    }
+
+    private void EventBegin() {
         gameOver = false;
         cheatsOn = false;
 
@@ -339,66 +425,75 @@ public class MazeFrame extends JFrame implements ActionListener {
                 "You must answer questions about your captors' culture and history to escape.");
     }
 
-    private void gameWon() {
-        gameOver = true;
-        player.setIcon(playerSprites[3]);
-        setText("You've escaped! Now you can return to your people on the mothership!",
-                "But the burden of useless trivia may never leave you...");
-    }
+    private void EventSave() {
+        if (myMaze == null) {
+            setText("Cannot save game, no current game found.", "Select new game from the menu to start a new game.");
+        } else {
+            try {
+                FileOutputStream fileOut = new FileOutputStream(FILENAME);
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                out.writeObject(myMaze);
+                fileOut.close();
 
-    private void gameLost() {
-        gameOver = true;
-        player.setIcon(playerSprites[2]);
-        setText("You're trapped in the maze... there's nowhere to go from here.",
-                "Your captors will continue to test you until you can answer correctly.");
-    }
-
-    private void cycleText() {
-        //This array contains all the game's flavor text. I'll keep filling this out.
-        String[] allText = {
-                "You feel like you are likely to be eaten by a grue.", "You're not, but it feels that way",
-                "The air in the maze is breathable, but cold.", "Hopefully you can find the exit soon...",
-                "You feel like you're being watched.", "Your captors surely have hidden cameras to supervise your progress.",
-                "You feel hungry.", "Come to think of it, when was the last time you ate?",
-                "You feel like this is a very inappropriate way to treat an ambassador.", "You will lodge a formal complaint as soon as you escape.",
-                "5", "5",
-                "6", "6",
-                "7", "7",
-                "8", "8",
-                "9", "9",
-                "10", "10",
-                "11", "11",
-                "12", "12",
-                "13", "13",
-                "14", "14",
-                "15", "15",
-                "16", "16",
-                "17", "17",
-                "18", "18",
-                "19", "19"};
-
-        //returns a random number from 0 to 29
-        int i = (int) (Math.random() * 30);
-
-        //if i is 25 - 29, you will learn some of your current coordinates.
-        //if i is 20 - 24, you will learn some of the exit's coordinates.
-        //if i is anywhere from 0 to 19, it will display random flavor text.
-        if (i >= 25) {
-            if (vertMove) {
-                setText("Hmmm... you feel like you're in row " + (myMaze.getPlayerH() + 1) + "...", "");
-            } else {
-                setText("Hmmm... you feel like you're in column " + (myMaze.getPlayerW() + 1) + "...", "");
+                setText("Game successfully saved to " + FILENAME + ".", "");
+            } catch(IOException e) {
+                setText("Cannot save game, an error has occurred.", e.toString());
+                e.printStackTrace();
             }
         }
-        else if (i >= 20) {
-            if (vertMove) {
-                setText("Somehow, you know that the exit is in row " + (myMaze.getGoalH() + 1) + "...", "");
-            } else {
-                setText("Somehow, you know that the exit is in column " + (myMaze.getGoalW() + 1) + "...", "");
-            }
+    }
+
+    private void EventLoad()  {
+        try {
+            myMaze = null;
+            FileInputStream fileIn = new FileInputStream(FILENAME);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            myMaze = (Maze) in.readObject();
+            in.close();
+            fileIn.close();
+
+            setText("Game successfully loaded from " + FILENAME + ".", "");
+            cheatsOn = false;
+            updateDoorIcons();
+            player.setIcon(playerSprites[0]);
+            gameOver = false;
+        } catch(IOException | ClassNotFoundException e) {
+            setText("Cannot load game, an error has occurred.", e.toString());
+            e.printStackTrace();
         }
-        else {
-            setText(allText[i*2], allText[(i*2) + 1]);
+
+    }
+
+    private void EventExit() {
+        setText("Closing...", "");
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }
+
+    private void EventAbout() {
+        String ab1 = "Trivia Maze Project for TCSS 360 with Tom Capaul";
+        String ab2 = "Joshua Lee, Logan Martinson, Samin Bahizad 2021";
+        setText(ab1, ab2);
+    }
+
+    private void EventInstructions() {
+        String in1 = "Move between rooms to find the exit. Click your character to change flavor text.";
+        String in2 = "Click a lock to be asked a question. Answer correctly to open the door.";
+        setText(in1, in2);
+    }
+
+    private void EventLog() {
+        setText("This feature has not been implemented yet.","");
+    }
+
+    private void EventToggleCheat() {
+        if (cheatsOn) {
+            cheatsOn = false;
+            setText("As suddenly as it appeared, your power seems to fade...", "Cheat mode deactivated.");
+            player.setIcon(playerSprites[0]);
+        } else {
+            cheatsOn = true;
+            setText("Just when all hope seemed lost, you felt an incredible power!", "Cheat mode activated.");
+            player.setIcon(playerSprites[5]);
         }
     }
 }
