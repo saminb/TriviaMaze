@@ -39,17 +39,14 @@ public class MultipleChoice extends Question {
 	/** 
 	 * Opens the question GUI for a MC Question and updates the Question's properties. Labels the question as asked.
 	 */
-	public void askQuestion( QuestionLog questionLog) {
-		MCQuestionGUI questionGUI = new MCQuestionGUI(this, questionLog);
+	public void askQuestion() {
+		MCQuestionGUI questionGUI = new MCQuestionGUI(this);
 		this.setAsked();
 		
 	}
 
-	@Override
-	public void askQuestion() {
 		// TODO Auto-generated method stub
-		
-	}
+	
 	
 	/* public boolean processAnswer(String theAnswer) {
 		if (theAnswer == this.getAnswer()) {

@@ -78,6 +78,7 @@ public class QuestionDatabaseManager {
 	public boolean poseQuestion() { // Method used to initiate the Question Answer process; retur
 		Question nextQuestion = this.getQuestion();
 		nextQuestion.askQuestion();
+		askedQuestions.add(nextQuestion);
 		
 		return nextQuestion.getAnsweredResult(); 
 	}

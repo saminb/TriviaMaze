@@ -11,44 +11,50 @@ import javax.swing.table.DefaultTableModel;
 public class MCQuestionGUI extends JFrame {
 	private JFrame myFrame;
 	private JPanel myBox;
-	private QuestionLog questionLog;
 	
-	public MCQuestionGUI(MultipleChoice theQuestion,  QuestionLog questionLog) {
-		initComponents(theQuestion, questionLog);
+	public MCQuestionGUI(MultipleChoice theQuestion) {
+		initComponents(theQuestion);
 	}
 	
-	private void initComponents(MultipleChoice theQuestion, QuestionLog questionLog) {
+	private void initComponents(MultipleChoice theQuestion) {
 		
 		//this.questionLog = questionLog;
 		myFrame = new JFrame("Multiple Choice Question");
-		myFrame.setMinimumSize(new Dimension(500, 300));
+		myFrame.setMinimumSize(new Dimension(500, 350));
 		myFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		myFrame.setLayout(new BorderLayout());
-		//myFrame.pack();
 		
 		
 		JPanel panel = new JPanel(new BorderLayout());
-		JLabel title = new JLabel(theQuestion.getQuestion());
-		title.setFont(new Font("Helvetica", Font.BOLD, 20));
-		JLabel instr = new JLabel("You have 60 seconds to answer!");
-		
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		//Create method to create title?
+		
+		JTextArea title = createTitle(theQuestion.getQuestion());
+		title.setOpaque(false);
+		JLabel instr = new JLabel("You have 60 seconds to answer!");
+		instr.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		
 		myBox = new JPanel(new BorderLayout());
-		Border padding = BorderFactory.createEmptyBorder(20, 20, 5, 20);
-		myBox.setBorder(padding);
-		
-		initializeButtons(theQuestion, panel);
-		
+		myBox.setBorder(BorderFactory.createEmptyBorder(20, 20, 5, 20));
 		myBox.add(panel, BorderLayout.PAGE_START);
 		
+		initializeButtons(theQuestion, panel);
+			
 		myFrame.add(title, BorderLayout.PAGE_START);
 		myFrame.add(myBox, BorderLayout.CENTER);
 		myFrame.add(instr, BorderLayout.PAGE_END);
-		title.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		instr.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		myFrame.pack();
 		myFrame.setVisible(true);
 		
+	}
+	
+	public JTextArea createTitle(String theQuestion) {
+		JTextArea newTitle = new JTextArea(theQuestion);
+		newTitle.setEditable(false);
+		newTitle.setLineWrap(true);
+		newTitle.setFont(new Font("Helvetica", Font.BOLD, 20));
+		newTitle.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		return newTitle;
 	}
 	
 	public void initializeButtons(MultipleChoice theQuestion, JPanel thePanel) {
@@ -65,8 +71,6 @@ public class MCQuestionGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// Make it so submit can only be pressed if a radio option is selected/handle error for no selection
 				String answer = group.getSelection().getActionCommand();
-				Object[] data= {theQuestion.getQuestion(),answer};
-				questionLog.addData(data);
 				boolean isCorrect = theQuestion.processAnswer(answer);
 				showAnswerGUI(isCorrect, theQuestion);
 				
@@ -77,10 +81,12 @@ public class MCQuestionGUI extends JFrame {
 	}
 	
 	private void showAnswerGUI(boolean isCorrect, Question theQuestion) { // Abstract away?
-		myBox.setVisible(false);
-		JPanel postPanel = new JPanel();
-		postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.PAGE_AXIS));
-		JLabel text = new JLabel();
+		myFrame.getContentPane().removeAll();
+		myBox = new JPanel();
+		myBox.setLayout(new BorderLayout());
+	;
+		JTextArea text = new JTextArea();
+		text.setOpaque(false);
 		if (isCorrect) {
 			text.setText("Congratulations! You chose the correct answer.");
 		} else {
@@ -93,10 +99,15 @@ public class MCQuestionGUI extends JFrame {
 			}
 		});
 		
-		postPanel.add(text);
-		postPanel.add(continueButton);
+		myBox.add(text, BorderLayout.CENTER);
+		myBox.add(continueButton, BorderLayout.PAGE_END);
+		myBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
-		myFrame.add(postPanel);
+		myFrame.add(myBox);
+		myFrame.setMinimumSize(new Dimension(100, 150));
+		myFrame.setMaximumSize(new Dimension(300, 300));
+		myFrame.repaint();
+		myFrame.pack();
 		myFrame.setVisible(true);
 	}
 	

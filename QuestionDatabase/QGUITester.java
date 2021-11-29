@@ -31,13 +31,13 @@ public class QGUITester {
 		testMCChoices[1] = "two";
 		testMCChoices[2] = "THree";
 		testMCChoices[3] = "Five";
-		MultipleChoice testMCQ = new MultipleChoice("123", "MC", "How many fingers do I have?", "Five", testMCChoices);
+		MultipleChoice testMCQ = new MultipleChoice("123", "MC", "How many fingers do I have? I'm making this longer to see if it will still fit. WIll this keep geting longer?", "Five", testMCChoices);
 		
 		/*String[] theChoices = testMCQ.getChoices();
 		for (String s: theChoices) {
 			System.out.println(s);
 		}*/
-		testMCQ.askQuestion(questionLog); //Ask question is void because the way the response is handled is that
+		testMCQ.askQuestion(); //Ask question is void because the way the response is handled is that
 							   // The question object's answered correctly field is updated.1
 	}
 	

@@ -38,7 +38,7 @@ public class QuestionLog {
 		questionLogFrame.setTitle("Question Log");
 		questionLogFrame.setContentPane(questionLogPanel);
 		questionLogFrame.setSize(500,500);
-		questionLogFrame.setVisible(true);
+		questionLogFrame.setVisible(false);
 		logTable.setBounds(10, 10, 10, 10);
 		questionLogPanel.setBorder(BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Question Log", TitledBorder.CENTER, TitledBorder.TOP));
 		questionLogPanel.add(logTable);
