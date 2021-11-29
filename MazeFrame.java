@@ -1,4 +1,7 @@
 import javax.swing.*;
+
+import QuestionDatabase.QuestionDatabaseManager;
+
 import java.awt.*;
 import java.io.*;
 import java.awt.event.ActionEvent;
@@ -9,6 +12,8 @@ public class MazeFrame extends JFrame implements ActionListener {
 
     private static final String FILENAME = "SavedMaze.ser";
     private Maze myMaze;
+    
+    private QuestionDatabaseManager myQuestionManager; //MazeFrame will hold a QDBM instance
 
     private JPanel roomView, textView, textViewL;
     private JLabel flavorText, flavorTextL;
@@ -22,6 +27,11 @@ public class MazeFrame extends JFrame implements ActionListener {
     private boolean cheatsOn = false;
 
     MazeFrame() {
+    	
+    	myQuestionManager = new QuestionDatabaseManager();
+    	//Left Button clicked -> Action Listener performes poseQuestion and polls QuestionLinkedList for latest object,
+    	//constructs string[] and sends data to question log
+    	
         initializePanels();
         initializeMenu();
 

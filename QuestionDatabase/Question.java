@@ -127,7 +127,6 @@ public abstract class Question {
 		return false;
 	}
 	
-	public abstract void askQuestion(QuestionLog questionLog);
 	
 	public abstract void askQuestion();
 	

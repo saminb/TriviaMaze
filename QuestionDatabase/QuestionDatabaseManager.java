@@ -15,6 +15,7 @@ public class QuestionDatabaseManager {
 	private int count;
 	private Queue<Question> questionsQueue;
 	private LinkedList<Question> askedQuestions;
+	
 	public QuestionDatabaseManager() {
 		
 		count = getTotalQuestions();
@@ -63,7 +64,7 @@ public class QuestionDatabaseManager {
 	 * 
 	 * @return question
 	 */
-	public Question getQuestion() {
+	private Question getQuestion() {
 		Question question = questionsQueue.poll();
 		askedQuestions.add(question);
 		if(questionsQueue.isEmpty()) {
@@ -77,6 +78,7 @@ public class QuestionDatabaseManager {
 	public boolean poseQuestion() { // Method used to initiate the Question Answer process; retur
 		Question nextQuestion = this.getQuestion();
 		nextQuestion.askQuestion();
+		
 		return nextQuestion.getAnsweredResult(); 
 	}
 	
