@@ -1,6 +1,8 @@
 import javax.swing.*;
 
+import QuestionDatabase.Question;
 import QuestionDatabase.QuestionDatabaseManager;
+import QuestionDatabase.QuestionLog;
 
 import java.awt.*;
 import java.io.*;
@@ -14,6 +16,7 @@ public class MazeFrame extends JFrame implements ActionListener {
     private Maze myMaze;
     
     private QuestionDatabaseManager myQuestionManager; //MazeFrame will hold a QDBM instance
+    private QuestionLog myQuestionLog; // Maze Frame will hold the QuestionLog GUI, should be as menu item
 
     private JPanel roomView, textView, textViewL;
     private JLabel flavorText, flavorTextL;
@@ -364,8 +367,12 @@ public class MazeFrame extends JFrame implements ActionListener {
             } else {
                 //The logic for calling and answering a question goes here.
                 //Right now, it's set up as if you always get the answer wrong.
+            	rightAnswer = myQuestionManager.poseQuestion();
+            	Question question = myQuestionManager.getLastQuestion(); // imported Question object; other solution?
+            	String[] questionData = { question.getQuestion(), question.getAnswer() };
+            	myQuestionLog.addData(questionData);
+            	//
                 setText("For no reason whatsoever, the door suddenly locked.", "");
-                rightAnswer = false;
                 myMaze.setDoor(myH, myW, Dir, false);
             }
         }
