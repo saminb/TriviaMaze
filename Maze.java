@@ -156,14 +156,12 @@ class Maze implements Serializable {
 
     /**
      * Checks whether the current maze is solvable from the current position. Wrapper for a recursion method.
-     * @param myH   vertical coordinate of the room
-     * @param myW   horizontal coordinate of the room
      * @return      returns true if the maze is still solvable
      */
-    boolean solvable(int myH, int myW) {
+    boolean solvable() {
         boolean[][] myMaze = new boolean[height][width];
 
-        myMaze = recSolver(myH, myW, myMaze);
+        myMaze = recSolver(playerH, playerW, myMaze);
 
         return (myMaze[goalH][goalW]);
     }
