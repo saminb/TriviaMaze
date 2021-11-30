@@ -40,7 +40,7 @@ public class MultipleChoice extends Question {
 	 * Opens the question GUI for a MC Question and updates the Question's properties. Labels the question as asked.
 	 */
 	public void askQuestion() {
-		MCQuestionGUI questionGUI = new MCQuestionGUI(this);
+		QuestionGUI questionGUI = new QuestionGUI(this);
 		this.setAsked();
 		
 	}

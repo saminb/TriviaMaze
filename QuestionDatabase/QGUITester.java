@@ -27,11 +27,11 @@ public class QGUITester {
 		
 		QuestionLog questionLog = new QuestionLog();
 		String[] testMCChoices = new String[4];
-		testMCChoices[0] = "four";
-		testMCChoices[1] = "two";
-		testMCChoices[2] = "THree";
+		testMCChoices[0] = "Four";
+		testMCChoices[1] = "Two";
+		testMCChoices[2] = "Three";
 		testMCChoices[3] = "Five";
-		MultipleChoice testMCQ = new MultipleChoice("123", "MC", "How many fingers do I have? I'm making this longer to see if it will still fit. WIll this keep geting longer?", "Five", testMCChoices);
+		MultipleChoice testMCQ = new MultipleChoice("123", "MC", "How many fingers do I have?", "Five", testMCChoices);
 		
 		/*String[] theChoices = testMCQ.getChoices();
 		for (String s: theChoices) {

@@ -4,10 +4,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-
 public class MCQuestionGUI extends JFrame {
 	private JFrame myFrame;
 	private JPanel myBox;
@@ -18,7 +14,6 @@ public class MCQuestionGUI extends JFrame {
 	
 	private void initComponents(MultipleChoice theQuestion) {
 		
-		//this.questionLog = questionLog;
 		myFrame = new JFrame("Multiple Choice Question");
 		myFrame.setMinimumSize(new Dimension(500, 350));
 		myFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -27,7 +22,6 @@ public class MCQuestionGUI extends JFrame {
 		
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		//Create method to create title?
 		
 		JTextArea title = createTitle(theQuestion.getQuestion());
 		title.setOpaque(false);
