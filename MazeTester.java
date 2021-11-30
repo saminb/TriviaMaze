@@ -98,27 +98,27 @@ public class MazeTester {
 
     @Test
     public void testSolvable() {
-        assertTrue(testMaze.solvable(testMaze.getPlayerH(), testMaze.getPlayerW()));
-        assertTrue(testMaze2.solvable(testMaze2.getPlayerH(), testMaze2.getPlayerW()));
+        assertTrue(testMaze.solvable());
+        assertTrue(testMaze2.solvable());
 
         testMaze.setDoor(1, 1, 0, false);
         testMaze.setDoor(1, 1, 1, false);
         testMaze.setDoor(1, 1, 2, false);
         testMaze.setDoor(1, 1, 3, false);
 
-        assertFalse(testMaze.solvable(1, 1));
-        assertTrue(testMaze.solvable(0, 0));
+        assertFalse(testMaze.solvable());
+        assertTrue(testMaze.solvable());
 
         testMaze2.setDoor(testMaze2.getGoalH(), testMaze2.getGoalW(), 0, false);
         testMaze2.setDoor(testMaze2.getGoalH(), testMaze2.getGoalW(), 1, false);
         testMaze2.setDoor(testMaze2.getGoalH(), testMaze2.getGoalW(), 2, false);
         testMaze2.setDoor(testMaze2.getGoalH(), testMaze2.getGoalW(), 3, false);
 
-        assertFalse(testMaze2.solvable(testMaze2.getPlayerH(), testMaze2.getPlayerW()));
+        assertFalse(testMaze2.solvable());
 
         testMaze2.setDoor(testMaze2.getGoalH(), testMaze2.getGoalW(), 0, true);
         testMaze2.setDoor(testMaze2.getGoalH(), testMaze2.getGoalW(), 1, true);
 
-        assertTrue(testMaze2.solvable(testMaze2.getPlayerH(), testMaze2.getPlayerW()));
+        assertTrue(testMaze2.solvable());
     }
 }
