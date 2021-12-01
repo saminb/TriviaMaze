@@ -49,6 +49,7 @@ public class QuestionDatabaseManager {
 		int count=-1;
 		try {
 			String sql = "SELECT count(QID) FROM Question_Bank;";
+			stmt= this.connection.prepareStatement(sql);
 			rs= stmt.executeQuery(sql);
 			count = rs.getInt(1);
 			} 
@@ -96,6 +97,7 @@ public class QuestionDatabaseManager {
 				String sql = "SELECT QID, Questions, QuestionType \r\n"
 						+ "FROM Question_Bank"
 						+ "WHERE QID="+ "Q"+i+";";
+				stmt= this.connection.prepareStatement(sql);
 				rs= stmt.executeQuery(sql);
 				String QID = rs.getString("QID");
 				String question = rs.getString("Question");
