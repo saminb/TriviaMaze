@@ -24,7 +24,6 @@ public class QuestionGUI extends JFrame {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
 		JTextArea title = createTitle(theQuestion.getQuestion());
-		title.setOpaque(false);
 		
 		JLabel instr = new JLabel("You have 60 seconds to answer!");
 		instr.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -49,6 +48,7 @@ public class QuestionGUI extends JFrame {
 		newTitle.setLineWrap(true);
 		newTitle.setFont(new Font("Helvetica", Font.BOLD, 20));
 		newTitle.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		newTitle.setOpaque(false);
 		return newTitle;
 	}
 	
@@ -103,6 +103,7 @@ public class QuestionGUI extends JFrame {
 		} else {
 			text.setText("Oops. You chose the wrong answer. The correct answer is: " + theQuestion.getAnswer());
 		}
+		
 		JButton continueButton = new JButton("Continue");
 		continueButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -114,6 +115,10 @@ public class QuestionGUI extends JFrame {
 		myBox.add(continueButton, BorderLayout.PAGE_END);
 		myBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
+		restartFrameForAnswer();
+	}
+	
+	private void restartFrameForAnswer() {
 		myFrame.add(myBox);
 		myFrame.setMinimumSize(new Dimension(100, 150));
 		myFrame.setMaximumSize(new Dimension(300, 300));
