@@ -4,7 +4,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 public class DBConnection {
 	
-	private static final String CONN= "jdbc:sqlite:trivia_maze_main.db";
+	private static final String CONN= "jdbc:sqlite:QuestionDatabase/trivia_maze_main.db";
 	
 	
 	public static Connection getConnection() throws SQLException{

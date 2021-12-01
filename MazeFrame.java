@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
+//TODO: All Question Buttons  need to be disabled after the first press (the lock door to initiate the ask process
+//		to make sure double clicks do not break the process.
+
 public class MazeFrame extends JFrame implements ActionListener {
 
     private static final String FILENAME = "SavedMaze.ser";
@@ -32,9 +35,6 @@ public class MazeFrame extends JFrame implements ActionListener {
     MazeFrame() {
     	
     	myQuestionManager = new QuestionDatabaseManager();
-    	//Left Button clicked -> Action Listener performes poseQuestion and polls QuestionLinkedList for latest object,
-    	//constructs string[] and sends data to question log
-    	
         initializePanels();
         initializeMenu();
 
@@ -410,7 +410,7 @@ public class MazeFrame extends JFrame implements ActionListener {
         if(myMaze.isSolved()) {
             EvenVictory();
         } else if (!rightAnswer) {
-            if (!myMaze.solvable(myH, myW)) {
+            if (!myMaze.solvable()) {
                 EventDefeat();
             }
         }
