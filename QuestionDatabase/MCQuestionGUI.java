@@ -2,72 +2,85 @@ package QuestionDatabase;
 
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 
 public class MCQuestionGUI extends JFrame {
 	private JFrame myFrame;
-	private JPanel myPanel;
-	private QuestionLog questionLog;
+	private JPanel myBox;
 	
-	public MCQuestionGUI(MultipleChoice theQuestion,  QuestionLog questionLog) {
-		initComponents(theQuestion, questionLog);
+	public MCQuestionGUI(MultipleChoice theQuestion) {
+		initComponents(theQuestion);
 	}
 	
-	private void initComponents(MultipleChoice theQuestion, QuestionLog questionLog) {
+	private void initComponents(MultipleChoice theQuestion) {
 		
-		this.questionLog = questionLog;
 		myFrame = new JFrame("Multiple Choice Question");
-		myFrame.setSize(600, 300);
-		myFrame.setResizable(false);
+		myFrame.setMinimumSize(new Dimension(500, 350));
 		myFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		myFrame.setLocationRelativeTo(null);
+		myFrame.setLayout(new BorderLayout());
 		
-		myPanel = new JPanel();
-		myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.PAGE_AXIS));
 		
-		JLabel question = new JLabel();
-		question.setText(theQuestion.getQuestion());
-		EmptyBorder whitespace = new EmptyBorder(5, 5, 20, 10);
-		question.setBorder(whitespace);
-		myPanel.add(question);
-		initializeButtons(theQuestion);
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
-		myFrame.add(myPanel);
+		JTextArea title = createTitle(theQuestion.getQuestion());
+		title.setOpaque(false);
+		JLabel instr = new JLabel("You have 60 seconds to answer!");
+		instr.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		
+		myBox = new JPanel(new BorderLayout());
+		myBox.setBorder(BorderFactory.createEmptyBorder(20, 20, 5, 20));
+		myBox.add(panel, BorderLayout.PAGE_START);
+		
+		initializeButtons(theQuestion, panel);
+			
+		myFrame.add(title, BorderLayout.PAGE_START);
+		myFrame.add(myBox, BorderLayout.CENTER);
+		myFrame.add(instr, BorderLayout.PAGE_END);
+		myFrame.pack();
 		myFrame.setVisible(true);
+		
 	}
 	
-	public void initializeButtons(MultipleChoice theQuestion) {
+	public JTextArea createTitle(String theQuestion) {
+		JTextArea newTitle = new JTextArea(theQuestion);
+		newTitle.setEditable(false);
+		newTitle.setLineWrap(true);
+		newTitle.setFont(new Font("Helvetica", Font.BOLD, 20));
+		newTitle.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		return newTitle;
+	}
+	
+	public void initializeButtons(MultipleChoice theQuestion, JPanel thePanel) {
 		ButtonGroup group = new ButtonGroup();
 		String[] answerChoices = theQuestion.getChoices();
 		for (int i = 0; i < answerChoices.length; i++) {
 			JRadioButton answer = new JRadioButton(answerChoices[i]);
 			group.add(answer);
-			myPanel.add(answer);
+			thePanel.add(answer);
 			answer.setActionCommand(answerChoices[i]);
 		}
 		JButton submitButton = new JButton("Submit");
-		myPanel.add(Box.createVerticalGlue());
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Make it so submit can only be pressed if a radio option is selected/handle error for no selection
 				String answer = group.getSelection().getActionCommand();
-				Object[] data= {theQuestion.getQuestion(),answer};
-				questionLog.addData(data);
 				boolean isCorrect = theQuestion.processAnswer(answer);
 				showAnswerGUI(isCorrect, theQuestion);
 				
 			}
 
 		});
-		myPanel.add(submitButton);
+		myBox.add(submitButton, BorderLayout.PAGE_END);
 	}
 	
 	private void showAnswerGUI(boolean isCorrect, Question theQuestion) { // Abstract away?
-		myPanel.setVisible(false);
-		JPanel postPanel = new JPanel();
-		postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.PAGE_AXIS));
-		JLabel text = new JLabel();
+		myFrame.getContentPane().removeAll();
+		myBox = new JPanel();
+		myBox.setLayout(new BorderLayout());
+	;
+		JTextArea text = new JTextArea();
+		text.setOpaque(false);
 		if (isCorrect) {
 			text.setText("Congratulations! You chose the correct answer.");
 		} else {
@@ -80,10 +93,15 @@ public class MCQuestionGUI extends JFrame {
 			}
 		});
 		
-		postPanel.add(text);
-		postPanel.add(continueButton);
+		myBox.add(text, BorderLayout.CENTER);
+		myBox.add(continueButton, BorderLayout.PAGE_END);
+		myBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
-		myFrame.add(postPanel);
+		myFrame.add(myBox);
+		myFrame.setMinimumSize(new Dimension(100, 150));
+		myFrame.setMaximumSize(new Dimension(300, 300));
+		myFrame.repaint();
+		myFrame.pack();
 		myFrame.setVisible(true);
 	}
 	

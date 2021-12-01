@@ -27,9 +27,9 @@ public class QGUITester {
 		
 		QuestionLog questionLog = new QuestionLog();
 		String[] testMCChoices = new String[4];
-		testMCChoices[0] = "four";
-		testMCChoices[1] = "two";
-		testMCChoices[2] = "THree";
+		testMCChoices[0] = "Four";
+		testMCChoices[1] = "Two";
+		testMCChoices[2] = "Three";
 		testMCChoices[3] = "Five";
 		MultipleChoice testMCQ = new MultipleChoice("123", "MC", "How many fingers do I have?", "Five", testMCChoices);
 		
@@ -37,7 +37,7 @@ public class QGUITester {
 		for (String s: theChoices) {
 			System.out.println(s);
 		}*/
-		testMCQ.askQuestion(questionLog); //Ask question is void because the way the response is handled is that
+		testMCQ.askQuestion(); //Ask question is void because the way the response is handled is that
 							   // The question object's answered correctly field is updated.1
 	}
 	
