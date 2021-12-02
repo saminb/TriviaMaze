@@ -186,6 +186,7 @@ public class MazeFrame extends JFrame implements ActionListener {
     public void answerQuestion(boolean isCorrect) {
         questionUp = false;
         myMaze.setDoor(myMaze.getPlayerH(), myMaze.getPlayerW(), questionDir, isCorrect);
+        updateIcons();
         questionDir = -1;
 
         if (isCorrect) {
@@ -196,7 +197,6 @@ public class MazeFrame extends JFrame implements ActionListener {
                 eventDefeat();
             }
         }
-        updateIcons();
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
