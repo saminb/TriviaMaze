@@ -1,8 +1,8 @@
 import javax.swing.*;
 
-import question.Question;
-import question.QuestionDatabaseManager;
-import question.QuestionLog;
+import QuestionDatabase.Question;
+import QuestionDatabase.QuestionDatabaseManager;
+import QuestionDatabase.QuestionLog;
 
 import java.awt.*;
 import java.io.*;
@@ -10,14 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
-//TODO: All Question Buttons  need to be disabled after the first press (the lock door to initiate the ask process
-//		to make sure double clicks do not break the process.
-
 public class MazeFrame extends JFrame implements ActionListener {
 
     private static final String FILENAME = "SavedMaze.ser";
     private Maze myMaze;
-    
+
     private QuestionDatabaseManager myQuestionManager; //MazeFrame will hold a QDBM instance
     private QuestionLog myQuestionLog; // Maze Frame will hold the QuestionLog GUI, should be as menu item
     private static final String databaseName= "trivia_maze_main.db";
@@ -29,13 +26,16 @@ public class MazeFrame extends JFrame implements ActionListener {
     private ImageIcon[] goDir, playerSprites;
     private JMenuItem newGame, saveGame, loadGame, exit, about, instructions, questionLog, cheats;
 
+    private boolean questionUp = false;
+    private int questionDir = -1;
+
     private boolean gameOver = true;
     private boolean vertMove = false;
     private boolean cheatsOn = false;
 
     MazeFrame() {
-    	
-    	myQuestionManager = new QuestionDatabaseManager(databaseName);
+
+        myQuestionManager = new QuestionDatabaseManager(databaseName);
         initializePanels();
         initializeMenu();
 
@@ -183,62 +183,86 @@ public class MazeFrame extends JFrame implements ActionListener {
         }
     }
 
+    public void answerQuestion(boolean isCorrect) {
+        questionUp = false;
+        myMaze.setDoor(myMaze.getPlayerH(), myMaze.getPlayerW(), questionDir, isCorrect);
+        questionDir = -1;
+
+        if (isCorrect) {
+            setText("You got it right!", "The door quietly slides open.");
+        } else {
+            setText("You got it wrong...", "The touchscreen mounted on the door goes dark.");
+            if (!myMaze.solvable()) {
+                eventDefeat();
+            }
+        }
+        updateIcons();
+    }
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == upButton && !gameOver) {
-            EventDoorClick(0);
-        }
-        else if (e.getSource() == downButton && !gameOver) {
-            EventDoorClick(1);
-        }
-        else if (e.getSource() == leftButton && !gameOver) {
-            EventDoorClick(2);
-        }
-        else if (e.getSource() == rightButton && !gameOver) {
-            EventDoorClick(3);
-        }
+        if (!questionUp) {
+            if (e.getSource() == upButton && !gameOver) {
+                eventDoorClick(0);
+            }
+            else if (e.getSource() == downButton && !gameOver) {
+                eventDoorClick(1);
+            }
+            else if (e.getSource() == leftButton && !gameOver) {
+                eventDoorClick(2);
+            }
+            else if (e.getSource() == rightButton && !gameOver) {
+                eventDoorClick(3);
+            }
 
-        else if (e.getSource() == player && !gameOver) {
-            player.setIcon(playerSprites[1]);
-            cycleText();
-        }
+            else if (e.getSource() == player && !gameOver) {
+                player.setIcon(playerSprites[1]);
+                cycleText();
+            }
 
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        else if (e.getSource() == newGame) {
-            EventBegin();
-        }
-        else if (e.getSource() == saveGame && !gameOver) {
-            EventSave();
-        }
-        else if (e.getSource() == loadGame) {
-            EventLoad();
-        }
-        else if (e.getSource() == exit) {
-            EventExit();
-        }
+            else if (e.getSource() == newGame) {
+                eventBegin();
+            }
+            else if (e.getSource() == saveGame && !gameOver) {
+                eventSave();
+            }
+            else if (e.getSource() == loadGame) {
+                eventLoad();
+            }
+            else if (e.getSource() == exit) {
+                eventExit();
+            }
 
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        else if (e.getSource() == about) {
-            EventAbout();
-        }
-        else if (e.getSource() == instructions) {
-            EventInstructions();
-        }
-        else if (e.getSource() == questionLog) {
-            EventLog();
-        }
-        else if (e.getSource() == cheats && !gameOver) {
-            EventToggleCheat();
+            else if (e.getSource() == about) {
+                eventAbout();
+            }
+            else if (e.getSource() == instructions) {
+                eventInstructions();
+            }
+            else if (e.getSource() == questionLog) {
+                eventLog();
+            }
+            else if (e.getSource() == cheats && !gameOver) {
+                eventCheat();
+            }
         }
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    private void updateDoorIcons() {
+    private void updateIcons() {
+        if (cheatsOn) {
+            player.setIcon(playerSprites[5]);
+        } else {
+            player.setIcon(playerSprites[0]);
+        }
+
         if (myMaze == null) {
             setAllDoorIcons(new int[] {-1,-1,-1,-1});
         } else {
@@ -353,28 +377,27 @@ public class MazeFrame extends JFrame implements ActionListener {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    private void EventDoorClick(int Dir) {
+    private void eventDoorClick(int Dir) {
         vertMove = (Dir == 0 || Dir == 1);
 
         int myH = myMaze.getPlayerH();
         int myW = myMaze.getPlayerW();
         int state = myMaze.checkDoor(myH, myW, Dir);
-        boolean rightAnswer = true;
 
         if (state == 0) {
             if (cheatsOn) {
                 setText("Focusing your power into a laser, you cut through the door in seconds!", "How wondrous...");
                 myMaze.setDoor(myH, myW, Dir, true);
+                updateIcons();
             } else {
+                questionUp = true;
+                questionDir = Dir;
                 //The logic for calling and answering a question goes here.
                 //Right now, it's set up as if you always get the answer wrong.
-            	rightAnswer = myQuestionManager.poseQuestion();
-            	Question question = myQuestionManager.getLastQuestion(); // imported Question object; other solution?
-            	String[] questionData = { question.getQuestion(), question.getAnswer() };
-            	myQuestionLog.addData(questionData);
-            	//
-                setText("For no reason whatsoever, the door suddenly locked.", "");
-                myMaze.setDoor(myH, myW, Dir, false);
+                myQuestionManager.poseQuestion();
+                Question question = myQuestionManager.getLastQuestion(); // imported Question object; other solution?
+                String[] questionData = { question.getQuestion(), question.getAnswer() };
+                myQuestionLog.addData(questionData);
             }
         }
         else if (state == 1) {
@@ -388,6 +411,10 @@ public class MazeFrame extends JFrame implements ActionListener {
                 myMaze.setPlayerPosition(myH, myW + 1);
             }
             cycleText();
+            updateIcons();
+            if(myMaze.isSolved()) {
+                eventVictory();
+            }
         }
         else if (state == 2) {
             if (cheatsOn) {
@@ -400,50 +427,39 @@ public class MazeFrame extends JFrame implements ActionListener {
         else {
             setText("That's a wall.", "If only you'd taken that \"Phasing Through Walls\" class in college.");
         }
-
-        if (cheatsOn) {
-            player.setIcon(playerSprites[5]);
-        } else {
-            player.setIcon(playerSprites[0]);
-        }
-
-        updateDoorIcons();
-        if(myMaze.isSolved()) {
-            EvenVictory();
-        } else if (!rightAnswer) {
-            if (!myMaze.solvable()) {
-                EventDefeat();
-            }
-        }
-
     }
 
-    private void EvenVictory() {
+    private void eventVictory() {
         gameOver = true;
         player.setIcon(playerSprites[3]);
-        setText("You've escaped! Now you can return to your people on the mothership!",
-                "But the burden of useless trivia may never leave you...");
+        if (cheatsOn) {
+            setText("Thanks to your Wondrous new Power, you've escaped!",
+                    "You decide to devote yourself to using your Power to help your people.");
+        } else {
+            setText("You've escaped! Now you can return to your people on the mothership!",
+                    "But the burden of useless trivia may never leave you...");
+        }
     }
 
-    private void EventDefeat() {
+    private void eventDefeat() {
         gameOver = true;
         player.setIcon(playerSprites[2]);
         setText("You're trapped in the maze... there's nowhere to go from here.",
                 "Your captors will continue to test you until you can answer correctly.");
     }
 
-    private void EventBegin() {
+    private void eventBegin() {
         gameOver = false;
         cheatsOn = false;
 
         myMaze = new Maze(5, 6);
-        updateDoorIcons();
+        updateIcons();
         player.setIcon(playerSprites[4]);
         setText("You wake up in a maze with a screaming headache...",
                 "You must answer questions about your captors' culture and history to escape.");
     }
 
-    private void EventSave() {
+    private void eventSave() {
         if (myMaze == null) {
             setText("Cannot save game, no current game found.", "Select new game from the menu to start a new game.");
         } else {
@@ -461,7 +477,7 @@ public class MazeFrame extends JFrame implements ActionListener {
         }
     }
 
-    private void EventLoad()  {
+    private void eventLoad()  {
         try {
             myMaze = null;
             FileInputStream fileIn = new FileInputStream(FILENAME);
@@ -472,7 +488,7 @@ public class MazeFrame extends JFrame implements ActionListener {
 
             setText("Game successfully loaded from " + FILENAME + ".", "");
             cheatsOn = false;
-            updateDoorIcons();
+            updateIcons();
             player.setIcon(playerSprites[0]);
             gameOver = false;
         } catch(IOException | ClassNotFoundException e) {
@@ -482,28 +498,28 @@ public class MazeFrame extends JFrame implements ActionListener {
 
     }
 
-    private void EventExit() {
+    private void eventExit() {
         setText("Closing...", "");
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
-    private void EventAbout() {
+    private void eventAbout() {
         String ab1 = "Trivia Maze Project for TCSS 360 with Tom Capaul";
         String ab2 = "Joshua Lee, Logan Martinson, Samin Bahizad 2021";
         setText(ab1, ab2);
     }
 
-    private void EventInstructions() {
+    private void eventInstructions() {
         String in1 = "Move between rooms to find the exit. Click your character to change flavor text.";
         String in2 = "Click a lock to be asked a question. Answer correctly to open the door.";
         setText(in1, in2);
     }
 
-    private void EventLog() {
+    private void eventLog() {
         setText("This feature has not been implemented yet.","");
     }
 
-    private void EventToggleCheat() {
+    private void eventCheat() {
         if (cheatsOn) {
             cheatsOn = false;
             setText("As suddenly as it appeared, your power seems to fade...", "Cheat mode deactivated.");
