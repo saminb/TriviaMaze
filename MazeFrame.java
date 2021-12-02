@@ -1,8 +1,8 @@
 import javax.swing.*;
 
-import QuestionDatabase.Question;
-import QuestionDatabase.QuestionDatabaseManager;
-import QuestionDatabase.QuestionLog;
+import question.Question;
+import question.QuestionDatabaseManager;
+import question.QuestionLog;
 
 import java.awt.*;
 import java.io.*;
