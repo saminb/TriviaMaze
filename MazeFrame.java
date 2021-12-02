@@ -12,7 +12,7 @@ import java.awt.event.WindowEvent;
 
 public class MazeFrame extends JFrame implements ActionListener {
 
-    private static final String FILENAME = "SavedMaze.ser";
+    private static final String[] FILENAMES = {"", "File 1", "File 2", "File 3"};
     private Maze myMaze;
 
     private QuestionDatabaseManager myQuestionManager; //MazeFrame will hold a QDBM instance
@@ -24,7 +24,8 @@ public class MazeFrame extends JFrame implements ActionListener {
     private JButton upButton, downButton, leftButton, rightButton, player;
     private ImageIcon lock, wall, wrong, blank;
     private ImageIcon[] goDir, playerSprites;
-    private JMenuItem newGame, saveGame, loadGame, exit, about, instructions, questionLog, cheats;
+    private JMenuItem exit, about, instructions, questionLog, cheats;
+    private JMenuItem newEasy, newMedi, newHard, save1, save2, save3, load1, load2, load3;
 
     private boolean questionUp = false;
     private int questionDir = -1;
@@ -136,29 +137,61 @@ public class MazeFrame extends JFrame implements ActionListener {
 
         JMenu file = new JMenu("File");
         JMenu help = new JMenu("Help");
+        JMenu newGame = new JMenu("New Game");
+        JMenu saveGame = new JMenu("Save Game");
+        JMenu loadGame = new JMenu("Load Game");
 
         menu.add(file);
         menu.add(help);
 
-        newGame 		= new JMenuItem("New Game");
-        saveGame 		= new JMenuItem("Save Game");
-        loadGame 		= new JMenuItem("Load Game");
         exit     		= new JMenuItem("Exit");
         about    		= new JMenuItem("About");
-        instructions    = new JMenuItem("Game Instruction");
+        instructions    = new JMenuItem("Game Instructions");
         questionLog     = new JMenuItem("Question Log");
         cheats          = new JMenuItem("Cheats");
+
+        newEasy = new JMenuItem("Easy (3 x 4)");
+        newMedi = new JMenuItem("Medium (5 x 6)");
+        newHard = new JMenuItem("Hard (7 x 8)");
+        newGame.add(newEasy);
+        newGame.add(newMedi);
+        newGame.add(newHard);
+
+        save1 = new JMenuItem("File 1");
+        save2 = new JMenuItem("File 2");
+        save3 = new JMenuItem("File 3");
+        saveGame.add(save1);
+        saveGame.add(save2);
+        saveGame.add(save3);
+
+        load1 = new JMenuItem("File 1");
+        load2 = new JMenuItem("File 2");
+        load3 = new JMenuItem("File 3");
+        loadGame.add(load1);
+        loadGame.add(load2);
+        loadGame.add(load3);
 
         file.add(newGame);
         file.add(saveGame);
         file.add(loadGame);
+        file.addSeparator();
         file.add(exit);
         help.add(about);
         help.add(instructions);
         help.add(questionLog);
         help.add(cheats);
 
-        newGame.addActionListener(this);
+        newEasy.addActionListener(this);
+        newMedi.addActionListener(this);
+        newHard.addActionListener(this);
+
+        save1.addActionListener(this);
+        save2.addActionListener(this);
+        save3.addActionListener(this);
+        load1.addActionListener(this);
+        load2.addActionListener(this);
+        load3.addActionListener(this);
+
         saveGame.addActionListener(this);
         loadGame.addActionListener(this);
         exit.addActionListener(this);
@@ -224,14 +257,32 @@ public class MazeFrame extends JFrame implements ActionListener {
 
             //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-            else if (e.getSource() == newGame) {
-                eventBegin();
+            else if (e.getSource() == newEasy) {
+                eventBegin(3, 4);
             }
-            else if (e.getSource() == saveGame && !gameOver) {
-                eventSave();
+            else if (e.getSource() == newMedi) {
+                eventBegin(5, 6);
             }
-            else if (e.getSource() == loadGame) {
-                eventLoad();
+            else if (e.getSource() == newHard) {
+                eventBegin(7, 8);
+            }
+            else if (e.getSource() == save1 && !gameOver) {
+                eventSave(1);
+            }
+            else if (e.getSource() == save2 && !gameOver) {
+                eventSave(2);
+            }
+            else if (e.getSource() == save3 && !gameOver) {
+                eventSave(3);
+            }
+            else if (e.getSource() == load1) {
+                eventLoad(1);
+            }
+            else if (e.getSource() == load2) {
+                eventLoad(2);
+            }
+            else if (e.getSource() == load3) {
+                eventLoad(3);
             }
             else if (e.getSource() == exit) {
                 eventExit();
@@ -448,54 +499,53 @@ public class MazeFrame extends JFrame implements ActionListener {
                 "Your captors will continue to test you until you can answer correctly.");
     }
 
-    private void eventBegin() {
+    private void eventBegin(int myH, int myW) {
         gameOver = false;
         cheatsOn = false;
 
-        myMaze = new Maze(5, 6);
+        myMaze = new Maze(myH, myW);
         updateIcons();
         player.setIcon(playerSprites[4]);
         setText("You wake up in a maze with a screaming headache...",
                 "You must answer questions about your captors' culture and history to escape.");
     }
 
-    private void eventSave() {
+    private void eventSave(int mySave) {
         if (myMaze == null) {
             setText("Cannot save game, no current game found.", "Select new game from the menu to start a new game.");
         } else {
             try {
-                FileOutputStream fileOut = new FileOutputStream(FILENAME);
+                FileOutputStream fileOut = new FileOutputStream("saves/" + FILENAMES[mySave] + ".ser");
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
                 out.writeObject(myMaze);
                 fileOut.close();
 
-                setText("Game successfully saved to " + FILENAME + ".", "");
+                setText("Game successfully saved to " + FILENAMES[mySave] + ".", "");
             } catch(IOException e) {
-                setText("Cannot save game, an error has occurred.", e.toString());
+                setText("Cannot save game, an error has occurred.", "");
                 e.printStackTrace();
             }
         }
     }
 
-    private void eventLoad()  {
+    private void eventLoad(int mySave)  {
         try {
             myMaze = null;
-            FileInputStream fileIn = new FileInputStream(FILENAME);
+            FileInputStream fileIn = new FileInputStream("saves/" + FILENAMES[mySave] + ".ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             myMaze = (Maze) in.readObject();
             in.close();
             fileIn.close();
 
-            setText("Game successfully loaded from " + FILENAME + ".", "");
+            setText("Game successfully loaded from " + FILENAMES[mySave] + ".", "");
             cheatsOn = false;
             updateIcons();
             player.setIcon(playerSprites[0]);
             gameOver = false;
         } catch(IOException | ClassNotFoundException e) {
-            setText("Cannot load game, an error has occurred.", e.toString());
+            setText("Cannot load game, an error has occurred.", "");
             e.printStackTrace();
         }
-
     }
 
     private void eventExit() {
