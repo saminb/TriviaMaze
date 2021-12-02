@@ -1,4 +1,4 @@
-package QuestionDatabase;
+package question;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.*;

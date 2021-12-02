@@ -1,4 +1,4 @@
-package QuestionDatabase;
+package question;
 
 public class MultipleChoice extends Question {
 	

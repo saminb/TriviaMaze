@@ -1,4 +1,4 @@
-package QuestionDatabase;
+package question;
 
 import java.awt.event.*;
 import javax.swing.*;

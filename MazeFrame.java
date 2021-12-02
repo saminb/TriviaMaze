@@ -1,8 +1,8 @@
 import javax.swing.*;
 
-import QuestionDatabase.Question;
-import QuestionDatabase.QuestionDatabaseManager;
-import QuestionDatabase.QuestionLog;
+import question.Question;
+import question.QuestionDatabaseManager;
+import question.QuestionLog;
 
 import java.awt.*;
 import java.io.*;
@@ -20,6 +20,7 @@ public class MazeFrame extends JFrame implements ActionListener {
     
     private QuestionDatabaseManager myQuestionManager; //MazeFrame will hold a QDBM instance
     private QuestionLog myQuestionLog; // Maze Frame will hold the QuestionLog GUI, should be as menu item
+    private static final String databaseName= "trivia_maze_main.db";
 
     private JPanel roomView, textView, textViewL;
     private JLabel flavorText, flavorTextL;
@@ -34,7 +35,7 @@ public class MazeFrame extends JFrame implements ActionListener {
 
     MazeFrame() {
     	
-    	myQuestionManager = new QuestionDatabaseManager();
+    	myQuestionManager = new QuestionDatabaseManager(databaseName);
         initializePanels();
         initializeMenu();
 
