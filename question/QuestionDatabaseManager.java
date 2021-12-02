@@ -14,14 +14,14 @@ import java.util.Random;
 public class QuestionDatabaseManager {
 	Connection connection= null;
 	private String databaseName;
-	private int count;
+	private int totalCount;
 	private Queue<Question> questionsQueue;
 	private LinkedList<Question> askedQuestions;
 	
 	public QuestionDatabaseManager(String dbName) {
 		this.databaseName = dbName;
 		
-		count = getTotalQuestions();
+		totalCount = getTotalQuestions();
 		questionsQueue = getQuestionsList();
 		askedQuestions = new LinkedList<Question>();
 	
@@ -53,7 +53,7 @@ public class QuestionDatabaseManager {
 	 * @return count
 	 */
 	
-	public int getTotalQuestions() {
+	private int getTotalQuestions() {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		int count=-1;
@@ -79,11 +79,15 @@ public class QuestionDatabaseManager {
 		return count;
 	}
 	
+	public int getTotalQuestionCount() {
+		return totalCount;
+	}
+	
 	/**gets questions without repeating until all questions are done
 	 * 
 	 * @return question
 	 */
-	private Question getQuestion() {
+	public Question getQuestion() {
 		Question question = questionsQueue.poll();
 		askedQuestions.add(question);
 		if(questionsQueue.isEmpty()) {
@@ -112,9 +116,9 @@ public class QuestionDatabaseManager {
 	
 	@SuppressWarnings("resource")
 	private Queue<Question> getQuestionsList(){
-		Question[] result = new Question[count];
+		Question[] result = new Question[totalCount];
 		
-		for( int i = 1; i <= count; i++) {
+		for( int i = 1; i <= totalCount; i++) {
 			PreparedStatement stmt = null;
 			ResultSet rs = null;
         
