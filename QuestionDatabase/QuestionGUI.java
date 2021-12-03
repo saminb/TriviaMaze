@@ -1,10 +1,12 @@
 package QuestionDatabase;
 
 import java.awt.event.*;
+import java.util.Observable;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class QuestionGUI extends JFrame {
+public class QuestionGUI extends Observable {
 	private JFrame myFrame;
 	private JPanel myBox;
 	
@@ -60,7 +62,7 @@ public class QuestionGUI extends JFrame {
 			thePanel.add(input);
 		} else {
 			String[] answerChoices;
-			if (type.equals("TF")) {
+			if (type.equals("T/F")) {
 				answerChoices = ((TrueFalse) theQuestion).getChoices();
 			} else {
 				answerChoices = ((MultipleChoice) theQuestion).getChoices();
@@ -74,7 +76,7 @@ public class QuestionGUI extends JFrame {
 		}
 		JButton submitButton = new JButton("Submit");
 		submitButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public synchronized void actionPerformed(ActionEvent e) {
 				// Make it so submit can only be pressed if a radio option is selected/handle error for no selection
 				String answer;
 				if (type.equals("SA")) {
@@ -83,6 +85,7 @@ public class QuestionGUI extends JFrame {
 					answer = group.getSelection().getActionCommand();
 				}
 				boolean isCorrect = theQuestion.processAnswer(answer);
+				notifyAll();
 				showAnswerGUI(isCorrect, theQuestion);
 				
 			}

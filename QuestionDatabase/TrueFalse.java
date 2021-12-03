@@ -24,7 +24,7 @@ public class TrueFalse extends Question {
 	 * Opens the question GUI for a T/F Question and updates the Question's properties. Labels the question as asked.
 	 */
 	public void askQuestion() {
-		TFQuestionGUI questionGUI = new TFQuestionGUI(this);
+		QuestionGUI questionGUI = new QuestionGUI(this);
 		this.setAsked();
 	}
 	

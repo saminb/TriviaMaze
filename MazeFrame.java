@@ -34,6 +34,7 @@ public class MazeFrame extends JFrame implements ActionListener {
 
     MazeFrame() {
     	
+    	myQuestionLog = new QuestionLog();
     	myQuestionManager = new QuestionDatabaseManager();
         initializePanels();
         initializeMenu();
@@ -352,7 +353,7 @@ public class MazeFrame extends JFrame implements ActionListener {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    private void EventDoorClick(int Dir) {
+    private synchronized void EventDoorClick(int Dir) {
         vertMove = (Dir == 0 || Dir == 1);
 
         int myH = myMaze.getPlayerH();
