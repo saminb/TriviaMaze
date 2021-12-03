@@ -1,6 +1,6 @@
-package QuestionDatabase;
+package question;
 
-public abstract class Question {
+public class Question {
 	private String myType;
 	private String myQuestion;
 	private String myAnswer;
@@ -126,8 +126,13 @@ public abstract class Question {
 		this.setAnsweredResult(false);
 		return false;
 	}
+
+	public void askQuestion() {
+		
+		
+	}
 	
 	
-	public abstract void askQuestion();
+	
 	
 }

@@ -1,5 +1,6 @@
-package QuestionDatabase;
+package question;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,45 +12,55 @@ import java.util.Queue;
 import java.util.Random;
 
 public class QuestionDatabaseManager {
-	Connection connection;
-	private int count;
+	Connection connection= null;
+	private String databaseName;
+	private int totalCount;
 	private Queue<Question> questionsQueue;
 	private LinkedList<Question> askedQuestions;
 	
-	public QuestionDatabaseManager() {
+	public QuestionDatabaseManager(String dbName) {
+		this.databaseName = dbName;
 		
-		try {
-			this.connection= DBConnection.getConnection();
-		}
-		catch(SQLException ex) {
-			ex.printStackTrace();
-		}
-		
-		if(this.connection == null) {
-			System.exit(0);
-		}
-		
-		count = getTotalQuestions();
+		totalCount = getTotalQuestions();
 		questionsQueue = getQuestionsList();
 		askedQuestions = new LinkedList<Question>();
 	
 	}
-	public boolean isDbConnected() {
-		return this.connection !=null;
-	}
+	
+	private Connection connect() throws SQLException {
+        return DriverManager.getConnection("jdbc:sqlite:question/" + this.databaseName);
+    }
+
+    private void disconnect(Connection connection, PreparedStatement stmt) throws SQLException {
+        if (stmt != null) {
+            stmt.close();
+        }
+        if (connection != null) {
+            connection.close();
+        }
+    }
+
+    private void disconnect(Connection connection, PreparedStatement stmt, ResultSet rs) throws SQLException {
+        if (rs != null) {
+            rs.close();
+        }
+        disconnect(connection, stmt);
+    }
+    
 	
 	/**	getting the total number of questions in the database
 	 * 
 	 * @return count
 	 */
 	
-	public int getTotalQuestions() {
+	private int getTotalQuestions() {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		int count=-1;
 		try {
+			connection= connect();
 			String sql = "SELECT count(QID) FROM Question_Bank;";
-			stmt= this.connection.prepareStatement(sql);
+			stmt= connection.prepareStatement(sql);
 			rs= stmt.executeQuery();
 			count = rs.getInt(1);
 			} 
@@ -57,14 +68,26 @@ public class QuestionDatabaseManager {
 			System.out.println(e.toString());
 			count = -1;
 			}
+		finally {
+            try {
+                disconnect(connection, stmt, rs);
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
 		return count;
+	}
+	
+	public int getTotalQuestionCount() {
+		return totalCount;
 	}
 	
 	/**gets questions without repeating until all questions are done
 	 * 
 	 * @return question
 	 */
-	private Question getQuestion() {
+	public Question getQuestion() {
 		Question question = questionsQueue.poll();
 		askedQuestions.add(question);
 		if(questionsQueue.isEmpty()) {
@@ -90,18 +113,19 @@ public class QuestionDatabaseManager {
 		return questionsQueue;
 	}
 	
-	@SuppressWarnings({ "null", "resource" })
+	@SuppressWarnings("resource")
 	private Queue<Question> getQuestionsList(){
-		Question[] result = new Question[count];
+		Question[] result = new Question[totalCount];
 		
-		for( int i = 1; i <= count; i++) {
+		for( int i = 1; i <= totalCount; i++) {
 			PreparedStatement stmt = null;
 			ResultSet rs = null;
         
 			try {
+				connection= connect();
 				String sql = "SELECT QID, Question, QuestionType FROM "
 							+ "Question_Bank WHERE QID = \""+ "Q"+i+"\";";
-				stmt = this.connection.prepareStatement(sql);
+				stmt = connection.prepareStatement(sql);
 				rs= stmt.executeQuery();
 				String QID = rs.getString("QID");
 				String question = rs.getString("Question");
@@ -111,7 +135,7 @@ public class QuestionDatabaseManager {
 						sql = "SELECT incorrect_A1 as Option1, incorrect_A2 as Option2, incorrect_A3 as Option3, answer as Option4\r\n"
 								+ "FROM Multiple_Choice_A\r\n"
 								+ "WHERE QID= \""+QID+"\";\r\n";
-						stmt = this.connection.prepareStatement(sql);
+						stmt = connection.prepareStatement(sql);
 						rs = stmt.executeQuery();
 						String answer = rs.getString("Option4");
 						String [] choices=  { rs.getString("Option1"), rs.getString("Option2"), rs.getString("Option3"),rs.getString("Option4") };
@@ -123,7 +147,7 @@ public class QuestionDatabaseManager {
 					case "T/F":
 					sql ="SELECT answer FROM True_or_False "
 							+ "WHERE QID = \""+QID+"\";";
-					stmt = this.connection.prepareStatement(sql);
+					stmt = connection.prepareStatement(sql);
 					rs = stmt.executeQuery();
 					answer = rs.getString("answer");
 					String[] trueFalseChoices= {"T","F"};
@@ -131,7 +155,7 @@ public class QuestionDatabaseManager {
 					break;
 					default:
 						sql ="SELECT answer FROM Short_Answer WHERE QID= \""+QID+"\";";
-						stmt = this.connection.prepareStatement(sql);
+						stmt = connection.prepareStatement(sql);
 						rs = stmt.executeQuery();
 						answer = rs.getString("answer");
 						result[i-1]= new ShortAnswer(QID,type,question, answer);
@@ -140,6 +164,14 @@ public class QuestionDatabaseManager {
 				}catch(SQLException e) {
 					e.printStackTrace();
 				}
+			finally {
+	            try {
+	                disconnect(connection, stmt, rs);
+	            }
+	            catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
         }
 		/** Using random to get a shuffled list for the questions
 		 * 

@@ -1,4 +1,4 @@
-package QuestionDatabase;
+package question;
 
 import java.util.*;
 
