@@ -85,7 +85,6 @@ public class QuestionGUI extends Observable {
 					answer = group.getSelection().getActionCommand();
 				}
 				boolean isCorrect = theQuestion.processAnswer(answer);
-				notifyAll();
 				showAnswerGUI(isCorrect, theQuestion);
 				
 			}

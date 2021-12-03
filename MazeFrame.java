@@ -428,7 +428,7 @@ public class MazeFrame extends JFrame implements ActionListener {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    private void EventDoorClick(int Dir) {
+    private synchronized void eventDoorClick(int Dir) {
         vertMove = (Dir == 0 || Dir == 1);
 
         int myH = myMaze.getPlayerH();
@@ -445,9 +445,10 @@ public class MazeFrame extends JFrame implements ActionListener {
                 questionDir = Dir;
                 //The logic for calling and answering a question goes here.
                 //Right now, it's set up as if you always get the answer wrong.
-                myQuestionManager.poseQuestion();
+                boolean answer = myQuestionManager.poseQuestion();
                 Question question = myQuestionManager.getLastQuestion(); // imported Question object; other solution?
                 String[] questionData = { question.getQuestion(), question.getAnswer() };
+                answerQuestion(question.getAnsweredResult());
                 myQuestionLog.addData(questionData);
             }
         }
