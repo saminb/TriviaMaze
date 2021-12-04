@@ -1,14 +1,14 @@
 package question;
 
 import java.awt.event.*;
-import java.util.Observable;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class QuestionGUI extends Observable {
-	private JFrame myFrame;
+public class QuestionGUI {
+	private JDialog myFrame;
 	private JPanel myBox;
+	private boolean isFinished = false;
 	
 	public QuestionGUI(Question theQuestion) {
 		initComponents(theQuestion);
@@ -16,7 +16,7 @@ public class QuestionGUI extends Observable {
 	
 	private void initComponents(Question theQuestion) {
 		
-		myFrame = new JFrame("Question");
+		myFrame = new JDialog(null, Dialog.ModalityType.DOCUMENT_MODAL);
 		myFrame.setMinimumSize(new Dimension(500, 350));
 		myFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		myFrame.setLayout(new BorderLayout());
@@ -76,16 +76,20 @@ public class QuestionGUI extends Observable {
 		}
 		JButton submitButton = new JButton("Submit");
 		submitButton.addActionListener(new ActionListener() {
-			public synchronized void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				// Make it so submit can only be pressed if a radio option is selected/handle error for no selection
 				String answer;
 				if (type.equals("SA")) {
 					answer = input.getText();
-				} else {
+				} else if (type.equals("MC")){
 					answer = group.getSelection().getActionCommand();
+				} else {
+					answer = "" + group.getSelection().getActionCommand().charAt(0);
 				}
+				System.out.println("Your answer: " + answer);
 				boolean isCorrect = theQuestion.processAnswer(answer);
 				showAnswerGUI(isCorrect, theQuestion);
+				restartFrameForAnswer();
 				
 			}
 
@@ -116,8 +120,8 @@ public class QuestionGUI extends Observable {
 		myBox.add(text, BorderLayout.CENTER);
 		myBox.add(continueButton, BorderLayout.PAGE_END);
 		myBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		
 		restartFrameForAnswer();
+		isFinished = true;
 	}
 	
 	private void restartFrameForAnswer() {
@@ -127,6 +131,10 @@ public class QuestionGUI extends Observable {
 		myFrame.repaint();
 		myFrame.pack();
 		myFrame.setVisible(true);
+	}
+	
+	public boolean getFinished() {
+		return this.isFinished;
 	}
 	
 }

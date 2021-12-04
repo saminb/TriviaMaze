@@ -14,14 +14,6 @@ public class ShortAnswer extends Question {
 		super(theQID, theType, theQuestion, theAnswer);
 	}
 	
-	/** 
-	 * Opens the question GUI for a SA Question and updates the Question's properties. Labels the question as asked.
-	 */
-	public void askQuestion() {
-		QuestionGUI questionGUI = new QuestionGUI(this);
-		this.setAsked();
-	}
-	
 	/* public boolean processAnswer(String theAnswer) {
 		if (theAnswer == this.getAnswer()) {
 			this.setAnsweredResult(true);

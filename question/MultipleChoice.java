@@ -35,15 +35,6 @@ public class MultipleChoice extends Question {
 	public String[] getChoices() {
 		return myChoices;
 	}
-	
-	/** 
-	 * Opens the question GUI for a MC Question and updates the Question's properties. Labels the question as asked.
-	 */
-	public void askQuestion() {
-		QuestionGUI questionGUI = new QuestionGUI(this);
-		this.setAsked();
-		
-	}
 
 		// TODO Auto-generated method stub
 	

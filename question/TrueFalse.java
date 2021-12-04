@@ -20,14 +20,6 @@ public class TrueFalse extends Question {
 		myChoices[1] = "False";
 	}
 	
-	/** 
-	 * Opens the question GUI for a T/F Question and updates the Question's properties. Labels the question as asked.
-	 */
-	public void askQuestion() {
-		QuestionGUI questionGUI = new QuestionGUI(this);
-		this.setAsked();
-	}
-	
 	/**
 	 * Retrieves the list of possible answers.
 	 * @return	the array of answer choices.

@@ -119,7 +119,8 @@ public class Question {
 	 * @return true if the answer is correct, false otherwise.
 	 */
 	public boolean processAnswer(String theAnswer) {
-		if (theAnswer == this.getAnswer()) {
+		System.out.println(this.getAnswer());
+		if (theAnswer.equals(this.getAnswer())) {
 			this.setAnsweredResult(true);
 			return true;
 		}
@@ -127,9 +128,19 @@ public class Question {
 		return false;
 	}
 
-	public void askQuestion() {
-		
-		
+	//Returns true when the question is finished
+	public boolean askQuestion() {
+		QuestionGUI questionGUI = new QuestionGUI(this);
+		while(!questionGUI.getFinished()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		this.setAsked();
+		return questionGUI.getFinished();
 	}
 	
 	

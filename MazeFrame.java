@@ -37,6 +37,7 @@ public class MazeFrame extends JFrame implements ActionListener {
     MazeFrame() {
 
         myQuestionManager = new QuestionDatabaseManager(databaseName);
+        myQuestionLog = new QuestionLog();
         initializePanels();
         initializeMenu();
 
@@ -445,10 +446,9 @@ public class MazeFrame extends JFrame implements ActionListener {
                 questionDir = Dir;
                 //The logic for calling and answering a question goes here.
                 //Right now, it's set up as if you always get the answer wrong.
-                boolean answer = myQuestionManager.poseQuestion();
+                myQuestionManager.poseQuestion();
                 Question question = myQuestionManager.getLastQuestion(); // imported Question object; other solution?
-                String[] questionData = { question.getQuestion(), question.getAnswer() };
-                answerQuestion(question.getAnsweredResult());
+                String[] questionData = { question.getQuestion(), question.getAnswer() };                answerQuestion(question.getAnsweredResult());
                 myQuestionLog.addData(questionData);
             }
         }
