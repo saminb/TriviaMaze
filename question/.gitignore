@@ -22,5 +22,9 @@
 /QuestionGUI$2.class
 /QuestionGUI.class
 /QuestionDatabaseManagerTest.class
+<<<<<<< HEAD
 /QuestionGUI$3.class
 /Question$1.class
+=======
+/DatabaseConnection.class
+>>>>>>> fd1cdde7df9cee5f62e76a0af247d23e86a06dd5
