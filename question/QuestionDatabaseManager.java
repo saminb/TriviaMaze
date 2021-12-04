@@ -1,6 +1,5 @@
 package question;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,42 +11,26 @@ import java.util.Queue;
 import java.util.Random;
 
 public class QuestionDatabaseManager {
-	Connection connection= null;
-	private String databaseName;
+	private Connection connection;
+	private DatabaseConnection database;
 	private int totalCount;
 	private Queue<Question> questionsQueue;
 	private LinkedList<Question> askedQuestions;
 	
 	public QuestionDatabaseManager(String dbName) {
-		this.databaseName = dbName;
+		this.database= new DatabaseConnection(dbName);
 		
 		totalCount = getTotalQuestions();
 		questionsQueue = getQuestionsList();
-		askedQuestions = new LinkedList<Question>();
+		setAskedQuestions(new LinkedList<Question>());
 	
 	}
 	
 	private Connection connect() throws SQLException {
-        return DriverManager.getConnection("jdbc:sqlite:question/" + this.databaseName);
+        return database.getConnection();
     }
 
-    private void disconnect(Connection connection, PreparedStatement stmt) throws SQLException {
-        if (stmt != null) {
-            stmt.close();
-        }
-        if (connection != null) {
-            connection.close();
-        }
-    }
 
-    private void disconnect(Connection connection, PreparedStatement stmt, ResultSet rs) throws SQLException {
-        if (rs != null) {
-            rs.close();
-        }
-        disconnect(connection, stmt);
-    }
-    
-	
 	/**	getting the total number of questions in the database
 	 * 
 	 * @return count
@@ -68,14 +51,7 @@ public class QuestionDatabaseManager {
 			System.out.println(e.toString());
 			count = -1;
 			}
-		finally {
-            try {
-                disconnect(connection, stmt, rs);
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+
 		return count;
 	}
 	
@@ -89,23 +65,26 @@ public class QuestionDatabaseManager {
 	 */
 	public Question getQuestion() {
 		Question question = questionsQueue.poll();
-		askedQuestions.add(question);
+		getAskedQuestions().add(question);
 		if(questionsQueue.isEmpty()) {
-			Collections.shuffle(askedQuestions);
-			questionsQueue.addAll(askedQuestions);
-			askedQuestions.clear();
+			Collections.shuffle(getAskedQuestions());
+			questionsQueue.addAll(getAskedQuestions());
+			getAskedQuestions().clear();
 		}
 		return question;
 	}
-	
-	public Question getLastQuestion() {
-		return askedQuestions.getLast();
+	public DatabaseConnection getDB() throws SQLException {
+		return database;
 	}
 	
-	public boolean poseQuestion() { // Method used to initiate the Question Answer process; retur
+	public Question getLastQuestion() {
+		return getAskedQuestions().getLast();
+	}
+	
+	public synchronized boolean poseQuestion() { // Method used to initiate the Question Answer process
 		Question nextQuestion = this.getQuestion();
 		nextQuestion.askQuestion();
-		askedQuestions.add(nextQuestion);
+		getAskedQuestions().add(nextQuestion);
 		return nextQuestion.getAnsweredResult(); 
 	}
 	
@@ -164,14 +143,6 @@ public class QuestionDatabaseManager {
 				}catch(SQLException e) {
 					e.printStackTrace();
 				}
-			finally {
-	            try {
-	                disconnect(connection, stmt, rs);
-	            }
-	            catch (SQLException e) {
-	                e.printStackTrace();
-	            }
-	        }
         }
 		/** Using random to get a shuffled list for the questions
 		 * 
@@ -189,6 +160,14 @@ public class QuestionDatabaseManager {
 			finalResult.add(result[i]);
 		}
 		return finalResult;
+	}
+
+	public LinkedList<Question> getAskedQuestions() {
+		return askedQuestions;
+	}
+
+	public void setAskedQuestions(LinkedList<Question> askedQuestions) {
+		this.askedQuestions = askedQuestions;
 	}
 
 }
