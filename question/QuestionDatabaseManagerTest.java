@@ -3,46 +3,45 @@
  */
 package question;
 
-import static org.junit.Assert.*;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.Queue;
 
+import static org.junit.Assert.*;
 import org.junit.*;
-import org.junit.jupiter.api.Test;
 
 /**
  * @author samin
  *
  */
-class QuestionDatabaseManagerTest {
+public class QuestionDatabaseManagerTest {
 	private static final String dbName= "triviamaze_test.db";
-	private static QuestionDatabaseManager test;
-	private static Connection connection;
-	private static PreparedStatement stmt;
+	private static QuestionDatabaseManager test = null;
 	
-	@BeforeClass
-	public static void setUp() throws SQLException {
+	@Before
+	public void before() throws SQLException {
 		test= new QuestionDatabaseManager(dbName);
-		connection= DriverManager.getConnection("jdbc:sqlite:question/" + dbName);
-		String sql= "";
-		stmt= connection.prepareStatement(sql);
 		
+	}
+	@Test
+	public void getLastQuestionTester() throws SQLException {
+		 
 	}
 	
 	@Test
-	public void getTotalQuestionTest() {
+	public void poseQuestionTester() throws SQLException { 
+	}
+	
+	@Test
+	public void getTotalQuestionTest() throws SQLException {
 		int count = test.getTotalQuestionCount();
-		test.connection= QuestionDatabaseManagerTest.connection;
-		assertEquals(5,count);
+		after();
+
+		assertEquals(6,count);
 		
 	}
 	@Test
-	public void getQuestionQueueTest() {
+	public void getQuestionQueueTest() throws SQLException {
 		String testChoices[]= {"Stephen Fry","Bill Gates","Stephen Hawking","Steve Jobs"};
 		String testChoices2[]= {"Charlie Puth","Harry Potter","Karl Marx","Charles Babbage"};
 		String testTorF[]= {"T","F"};
@@ -54,22 +53,7 @@ class QuestionDatabaseManagerTest {
 							   new TrueFalse("Q74", "T/F", " Microcomputers have largely replaced minicomputers ", "T",testTorF)					   
 		};
 		Queue<Question>temp = test.getQuestionsQueue();
-		Question[] questions = new Question[test.getTotalQuestionCount()];
-		for (int i = 0; i < test.getTotalQuestionCount(); i++) {
-			questions[i] = temp.poll();
-		}
-		boolean flag1 = true;
-		for (int i = 0; i < expected.length; i++) {
-			boolean flag2 = false;
-			for (int j = 0; j < expected.length; j++) {
-				if (questionsEqual(expected[j], questions[i])) {
-					flag2 = true;
-				}
-			}
-			if (!flag2) {
-				flag1 = false;
-			}
-		}
+		
 	}
 	
 	@Test
@@ -90,17 +74,11 @@ class QuestionDatabaseManagerTest {
 			test.getQuestion();
 		}
 	}
+
 	
-	private boolean questionsEqual(Question question1, Question question2) {
-		if (!question1.toString().equals(question2.toString())) {
-			return false;
-		}
-		return true;
-	}
-	@AfterClass
-    public static void tearDown() throws SQLException {
-        stmt.close();
-        connection.close();
+	@After
+    public  void after() throws SQLException{
+		test.getDB().closeConnection();
     }
 
 }
