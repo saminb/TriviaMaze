@@ -5,6 +5,7 @@ package question;
 
 import java.sql.*;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Queue;
 
 import static org.junit.Assert.*;
@@ -25,12 +26,21 @@ public class QuestionDatabaseManagerTest {
 	}
 	@Test
 	public void getLastQuestionTester() throws SQLException {
+		LinkedList<Question> list = new LinkedList<Question>();
+			list.add(test.getQuestion());
+			Question q1 = list.getLast();
+			Question q2 = test.getLastQuestion();
+			assertTrue(questionsEqual(q1, q2));
+			
+		}
+		
 		 
-	}
 	
 	@Test
 	public void poseQuestionTester() throws SQLException { 
+
 	}
+	
 	
 	@Test
 	public void getTotalQuestionTest() throws SQLException {
@@ -55,7 +65,12 @@ public class QuestionDatabaseManagerTest {
 		Queue<Question>temp = test.getQuestionsQueue();
 		
 	}
-	
+	private boolean questionsEqual(Question question1, Question question2) {
+		if (!question1.toString().equals(question2.toString())) {
+			return false;
+		}
+		return true;
+	}
 	@Test
 	public void getQuestionTest() {
 		Question[] questions1 = new Question[test.getTotalQuestionCount()];
