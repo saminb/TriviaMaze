@@ -1,4 +1,5 @@
 package question;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +11,11 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
+/**
+ * 
+ * @author joshu
+ *
+ */
 public class QuestionDatabaseManager {
 	private Connection connection;
 	private DatabaseConnection database;

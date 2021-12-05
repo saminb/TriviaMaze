@@ -429,7 +429,7 @@ public class MazeFrame extends JFrame implements ActionListener {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    private synchronized void eventDoorClick(int Dir) {
+    private void eventDoorClick(int Dir) {
         vertMove = (Dir == 0 || Dir == 1);
 
         int myH = myMaze.getPlayerH();
@@ -567,7 +567,7 @@ public class MazeFrame extends JFrame implements ActionListener {
     }
 
     private void eventLog() {
-        setText("This feature has not been implemented yet.","");
+       myQuestionLog.setVisible();
     }
 
     private void eventCheat() {

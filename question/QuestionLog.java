@@ -15,22 +15,11 @@ public class QuestionLog {
 	
 	public QuestionLog() {
 		initializePanel();
-		
 	}
 	private void initializePanel() {
 		
 		questionLogFrame= new JFrame();
 		questionLogPanel= new JPanel();
-		
-		// Testing Question Log
-		String[] theChoices = new String[4];
-		theChoices[0] = "huh";
-		theChoices[1] = "what";
-		theChoices[2] = "yup";
-		theChoices[3] = "Yes";
-		MultipleChoice testQuestion = new MultipleChoice("123", "MC", "HOW?", "Yes", theChoices);
-		String[] testData = {testQuestion.getQuestion(), testQuestion.getAnswer()};
-		//Test Data created
 		
 		String[] columnNames= {"Questions", "Your Answers"};
 		this.qTableModel= new DefaultTableModel(columnNames,0);
@@ -43,8 +32,6 @@ public class QuestionLog {
 		questionLogPanel.setBorder(BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Question Log", TitledBorder.CENTER, TitledBorder.TOP));
 		questionLogPanel.add(logTable);
 		String[] test = {"I hate this?","True"};
-		qTableModel.addRow(test);
-		qTableModel.addRow(testData);
 		logTable.setModel(qTableModel);
 		}
     public void addData(Object[] data)
@@ -56,6 +43,10 @@ public class QuestionLog {
         System.out.println("data is now added to the qTable");
         System.out.println(this.qTableModel.getDataVector());
     }   
+    
+    public void setVisible() {
+    	questionLogFrame.setVisible(true);
+    }
    /* public static void main(String[] arg) throws Exception {
     	new QuestionLog();
     }*/
