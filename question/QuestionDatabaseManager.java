@@ -53,10 +53,9 @@ public class QuestionDatabaseManager {
 			rs= stmt.executeQuery();
 			count = rs.getInt(1);
 			} 
-		catch (Exception e) {
-			System.out.println(e.toString());
-			count = -1;
-			}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
 
 		return count;
 	}
