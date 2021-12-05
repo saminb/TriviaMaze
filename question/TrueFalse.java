@@ -1,8 +1,21 @@
 package question;
 
+/**
+ * TrueFalse represents an implementation of the Question abstract class that has the structure of 
+ * a True - False style question. The significant difference in this implementation is that there are
+ * two set answer choices and the order of the choices are static: True, False.
+ * 
+ * TrueFalse will be one of the types of questions that users are prompted with in Trivia Maze.
+ * 
+ * @author joshu
+ * @version
+ *
+ */
 public class TrueFalse extends Question {
 
-	// List of answer choices for this question.
+	/**
+	 * The list of answer choices for the question: True and False.
+	 */
 	private String[] myChoices;
 
 	/** Constructs a True - False Question Object with the given parameters:
@@ -36,15 +49,4 @@ public class TrueFalse extends Question {
 	public void setChoice(String theChoice, int theIndex) {
 		myChoices[theIndex] = theChoice;
 	}
-	
-	/* public boolean processAnswer(String theAnswer) {
-		if (theAnswer == this.getAnswer()) {
-			this.setAnsweredResult(true);
-			return true;
-		}
-		this.setAnsweredResult(false);
-		return false;
-	} Abstract away to the Question abstract class.*/
-
-	
 }

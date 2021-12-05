@@ -1,8 +1,21 @@
 package question;
 
+/**
+ * MultipleChoice represents an implementation of the Question abstract class that has the structure of 
+ * a Multiple Choice style question, in which the user has four choices to choose from with only one correct
+ * choice. 
+ * 
+ * MultipleChoice will be one of the types of questions that users are prompted with in Trivia Maze.
+ * 
+ * @author joshu
+ * @version
+ *
+ */
 public class MultipleChoice extends Question {
 	
-	// List of answer choices for this question.
+	/**
+	 * The list of four choices for the question.
+	 */
 	private String[] myChoices;
 
 	/** Constructs a Multiple Choice Question Object with the given parameters:
@@ -35,17 +48,4 @@ public class MultipleChoice extends Question {
 	public String[] getChoices() {
 		return myChoices;
 	}
-
-		// TODO Auto-generated method stub
-	
-	
-	/* public boolean processAnswer(String theAnswer) {
-		if (theAnswer == this.getAnswer()) {
-			this.setAnsweredResult(true);
-			return true;
-		}
-		this.setAnsweredResult(false);
-		return false;
-	} Abstract away to the Question abstract class. */
-	
 }

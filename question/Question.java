@@ -1,11 +1,44 @@
 package question;
 
+/**
+ * This class represents the Question object for the Trivia Maze program. The question holds information
+ * necessary for a Question-Answer type object, including the type of the question (Multiple Choice, True False,
+ * Short Answer). The Question object is also responsible for calling and opening the GUI for the question.
+ * 
+ * @author	Joshua Lee
+ * @version: 
+ * 
+ */
 public class Question {
+	
+	/** 
+	 * The type of the question (TF, SA, MC).
+	 */
 	private String myType;
+	
+	/**
+	 * The question to be asked.
+	 */
 	private String myQuestion;
+	
+	/**
+	 * The true answer of the question.
+	 */
 	private String myAnswer;
+	
+	/**
+	 * The ID of the question, which is unique for each Question object.
+	 */
 	private String myQID;
+	
+	/**
+	 * The status of whether the question has been asked yet.
+	 */
 	private boolean hasBeenAsked;
+	
+	/**
+	 * The status of whether the user answered with the correct answer.
+	 */
 	private boolean hasCorrectAnswer;
 	
 	/**
@@ -27,7 +60,6 @@ public class Question {
 	
 	/**
 	 * Retrieves the question to be asked.
-	 * 
 	 * @return the question.
 	 */
 	public String getQuestion() {
@@ -36,7 +68,6 @@ public class Question {
 	
 	/**
 	 * Retrieves the answer to the question.
-	 * 
 	 * @return the answer.
 	 */
 	public String getAnswer() {
@@ -45,7 +76,6 @@ public class Question {
 	
 	/**
 	 * Sets the Question object's question to theQuestion given.
-	 * 
 	 * @param theQuestion the new question.
 	 */
 	public void setQuestion(String theQuestion) {
@@ -54,7 +84,6 @@ public class Question {
 	
 	/**
 	 * Sets the Question object's answer to theAnswer given.
-	 * 
 	 * @param theAnswer the new answer.
 	 */
 	public void setAnswer(String theAnswer) {
@@ -63,7 +92,6 @@ public class Question {
 	
 	/**
 	 * Retrieves the question type of the question.
-	 * 
 	 * @return the type (MC, SA, TF).
 	 */
 	public String getType() {
@@ -86,17 +114,23 @@ public class Question {
 		this.myQID = theQID;
 	}
 	
+	/**
+	 * Sets the question's status to asked.
+	 */
 	public void setAsked() {
 		this.hasBeenAsked = true;
 	}
 	
+	/**
+	 * Gets the question's asked status: has the question been asked yet
+	 * @return the question's asked status
+	 */
 	public boolean getAsked() {
 		return this.hasBeenAsked;
 	}
 	
 	/**
 	 * Sets the result of the user's answer to the result; true if the answer was correct, false otherwise.
-	 * 
 	 * @param theResult the correctness of the user's answer.
 	 */
 	public void setAnsweredResult(boolean theResult) {
@@ -128,7 +162,10 @@ public class Question {
 		return false;
 	}
 
-	//Returns true when the question is finished
+	/**
+	 * Displays the question GUI and returns true when the question has been asked.
+	 * @return true when question is asked.
+	 */
 	public boolean askQuestion() {
 		QuestionGUI questionGUI = new QuestionGUI(this);
 		while(!questionGUI.getFinished()) {

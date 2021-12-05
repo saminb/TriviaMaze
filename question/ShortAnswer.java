@@ -1,5 +1,16 @@
 package question;
 
+/**
+ * ShortAnswer represents an implementation of the Question abstract class that has the structure of 
+ * a Short Answer style question. The significant difference in this implementation is that there are
+ * no set answer choices; ShortAnswer instead takes users input for the answer.
+ * 
+ * ShortAnswer will be one of the types of questions that users are prompted with in Trivia Maze.
+ * 
+ * @author joshu
+ * @version
+ *
+ */
 public class ShortAnswer extends Question {
 
 	/**
@@ -13,13 +24,4 @@ public class ShortAnswer extends Question {
 	public ShortAnswer(String theQID,String theType, String theQuestion, String theAnswer) {
 		super(theQID, theType, theQuestion, theAnswer);
 	}
-	
-	/* public boolean processAnswer(String theAnswer) {
-		if (theAnswer == this.getAnswer()) {
-			this.setAnsweredResult(true);
-			return true;
-		}
-		this.setAnsweredResult(false);
-		return false;
-	} Abstract away to the Question abstract class. */
 }
