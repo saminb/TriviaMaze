@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import org.junit.*;
 
 /**
@@ -30,15 +32,21 @@ public class QuestionDatabaseManagerTest {
 			list.add(test.getQuestion());
 			Question q1 = list.getLast();
 			Question q2 = test.getLastQuestion();
-			assertTrue(questionsEqual(q1, q2));
-			
-		}
+			if( (q1== null) && (q2==null))
+			{
+				assertNull(q1);
+				assertNull(q2);
+			}
+
+	}
 		
 		 
 	
 	@Test
 	public void poseQuestionTester() throws SQLException { 
-
+		Question q1= test.getQuestion();
+		assertEquals(test.poseQuestion(),q1.getAnsweredResult());
+		
 	}
 	
 	
@@ -50,6 +58,7 @@ public class QuestionDatabaseManagerTest {
 		assertEquals(6,count);
 		
 	}
+	
 	@Test
 	public void getQuestionQueueTest() throws SQLException {
 		String testChoices[]= {"Stephen Fry","Bill Gates","Stephen Hawking","Steve Jobs"};
@@ -62,14 +71,7 @@ public class QuestionDatabaseManagerTest {
 							   new TrueFalse("Q73", "T/F"," VOIP (Voice Over Internet Protocol) is a type of modem.","F",testTorF),
 							   new TrueFalse("Q74", "T/F", " Microcomputers have largely replaced minicomputers ", "T",testTorF)					   
 		};
-		Queue<Question>temp = test.getQuestionsQueue();
-		
-	}
-	private boolean questionsEqual(Question question1, Question question2) {
-		if (!question1.toString().equals(question2.toString())) {
-			return false;
-		}
-		return true;
+		assertTrue(expected == test.getQuestionsQueue().toArray());
 	}
 	@Test
 	public void getQuestionTest() {
