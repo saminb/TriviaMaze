@@ -6,6 +6,7 @@ package question;
  * Short Answer). The Question object is also responsible for calling and opening the GUI for the question.
  * 
  * @author	Joshua Lee
+ * @author samin
  * @version: 
  * 
  */
