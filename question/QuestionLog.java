@@ -1,21 +1,32 @@
 package question;
 import javax.swing.*;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.table.*;
-import java.awt.*;
 
+
+/**
+ *@author samin
+ * This class create the functionality of  question log. 
+ * It creates a frame with table with the information about questions answered.
+ */
 public class QuestionLog {
 	private DefaultTableModel qTableModel;
 	private JTable logTable;
 	private JFrame questionLogFrame;
 	private JPanel questionLogPanel;
-	/**
-	 * Create the panel.
-	 */
 	
+	
+	/**
+	 * Calls initializePanel() to create the questionlog panel
+	 */
 	public QuestionLog() {
 		initializePanel();
 	}
+	
+	/**
+	 * Create the questionlog frame and panel
+	 */
 	private void initializePanel() {
 		
 		questionLogFrame= new JFrame();
@@ -31,12 +42,14 @@ public class QuestionLog {
 		logTable.setBounds(10, 10, 10, 10);
 		questionLogPanel.setBorder(BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Question Log", TitledBorder.CENTER, TitledBorder.TOP));
 		questionLogPanel.add(logTable);
-		String[] test = {"I hate this?","True"};
 		logTable.setModel(qTableModel);
 		}
+	
+	/**
+	 * Adds more data to the questionlog table when it is called
+	 */
     public void addData(Object[] data)
     {
-//		qTableModel = (DefaultTableModel)logTable.getModel();
         logTable.setAutoCreateColumnsFromModel(true);
     	this.qTableModel.addRow(data);
         logTable.setModel(this.qTableModel);
@@ -47,9 +60,6 @@ public class QuestionLog {
     public void setVisible() {
     	questionLogFrame.setVisible(true);
     }
-   /* public static void main(String[] arg) throws Exception {
-    	new QuestionLog();
-    }*/
 
 	
 }
