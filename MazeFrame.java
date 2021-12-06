@@ -12,7 +12,9 @@ import java.awt.event.WindowEvent;
 
 public class MazeFrame extends JFrame implements ActionListener {
 
-    private static final String[] FILENAMES = {"", "File 1", "File 2", "File 3"};
+	private static final long serialVersionUID = 1L;
+	
+	private static final String[] FILENAMES = {"", "File 1", "File 2", "File 3"};
     private Maze myMaze;
 
     private QuestionDatabaseManager myQuestionManager; //MazeFrame will hold a QDBM instance
@@ -37,7 +39,6 @@ public class MazeFrame extends JFrame implements ActionListener {
     MazeFrame() {
 
         myQuestionManager = new QuestionDatabaseManager(databaseName);
-        myQuestionLog = new QuestionLog();
         initializePanels();
         initializeMenu();
 
@@ -203,7 +204,10 @@ public class MazeFrame extends JFrame implements ActionListener {
     }
 
     private static class RoomPanel extends JPanel {
-        @Override
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
         public void paintComponent(Graphics g) {
             g.setColor(Color.lightGray);
             g.fillRect(0,0,500,300);
@@ -211,7 +215,6 @@ public class MazeFrame extends JFrame implements ActionListener {
             g.drawLine(100,0,100,160);
             g.drawLine(100,160,0,300);
             g.drawLine(100,160,400,160);
-            g.drawLine(100,159,400,159);
             g.drawLine(400,0,400,160);
             g.drawLine(400,160,500,300);
         }
@@ -359,6 +362,8 @@ public class MazeFrame extends JFrame implements ActionListener {
     }
 
     private void cycleText() {
+    	String s = "";
+    	int distH, distW, distT;
         //This array contains all the game's flavor text. I'll keep filling this out.
         String[] allText = {
                 "There is a pensive feeling in the air...", "",
@@ -383,9 +388,9 @@ public class MazeFrame extends JFrame implements ActionListener {
 
         //if i is 25 - 29, you will learn some of your current coordinates.
         //if i is 20 - 24, you will learn some of the exit's coordinates.
-        //if i is 18 - 19, you will learn how far you are from the exit.
+        //if i is 18 - 19, you will learn how far you are from the exit in total.
         //if i is 17, you will learn how far you are from the exit vertically.
-        //if i is 16, you will learn how far you are from the exit vertically.
+        //if i is 16, you will learn how far you are from the exit horizontally.
         //if i is anywhere from 0 to 15, it will display random flavor text.
         if (i >= 25) {
             if (vertMove) {
@@ -402,24 +407,28 @@ public class MazeFrame extends JFrame implements ActionListener {
             }
         }
         else if (i >= 18) {
-            int distH = Math.abs(myMaze.getPlayerH() - myMaze.getGoalH());
-            int distW = Math.abs(myMaze.getPlayerW() - myMaze.getGoalW());
-            setText("Somehow, you know that you're " + (distH + distW) + " moves from the exit...", "");
+            distH = Math.abs(myMaze.getPlayerH() - myMaze.getGoalH());
+            distW = Math.abs(myMaze.getPlayerW() - myMaze.getGoalW());
+            distT = distH + distW;
+            s = (distT == 1)? "" : "s";
+            setText("Somehow, you know that you're " + (distT) + " move" + s + " from the exit...", "");
         }
         else if (i == 17) {
-            int distH = myMaze.getPlayerH() - myMaze.getGoalH();
+        	distH = Math.abs(myMaze.getPlayerH() - myMaze.getGoalH());
             if (distH == 0) {
                 setText("Somehow, you know that you're in the same row as the goal.", "");
             } else {
-                setText("Somehow, you know that you're " + Math.abs(distH) + " rows away from the goal.", "");
+            	s = (distH == 1)? "" : "s";
+                setText("Somehow, you know that you're " + distH + " row" + s + " away from the goal.", "");
             }
         }
         else if (i == 16) {
-            int distW = myMaze.getPlayerW() - myMaze.getGoalW();
+        	distW = Math.abs(myMaze.getPlayerW() - myMaze.getGoalW());
             if (distW == 0) {
                 setText("Somehow, you know that you're in the same column as the goal.", "");
             } else {
-                setText("Somehow, you know that you're " + Math.abs(distW) + " columns away from the goal.", "");
+            	s = (distW == 1)? "" : "s";
+                setText("Somehow, you know that you're " + distW + " column" + s + " away from the goal.", "");
             }
         }
         else {
@@ -430,7 +439,9 @@ public class MazeFrame extends JFrame implements ActionListener {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private void eventDoorClick(int Dir) {
-        vertMove = (Dir == 0 || Dir == 1);
+    	if (Dir == 0 || Dir == 1) {
+    		vertMove = true;
+    	}
 
         int myH = myMaze.getPlayerH();
         int myW = myMaze.getPlayerW();
@@ -472,6 +483,7 @@ public class MazeFrame extends JFrame implements ActionListener {
             if (cheatsOn) {
                 setText("Focusing your power into a laser, you cut through the door in seconds!", "How wondrous...");
                 myMaze.setDoor(myH, myW, Dir, true);
+                updateIcons();
             } else {
                 setText("The door locked when you answered its question wrong.", "You'll have to find another way.");
             }
@@ -505,6 +517,7 @@ public class MazeFrame extends JFrame implements ActionListener {
         cheatsOn = false;
 
         myMaze = new Maze(myH, myW);
+        myQuestionLog = new QuestionLog();
         updateIcons();
         player.setIcon(playerSprites[4]);
         setText("You wake up in a maze with a screaming headache...",
@@ -535,6 +548,7 @@ public class MazeFrame extends JFrame implements ActionListener {
             FileInputStream fileIn = new FileInputStream("saves/" + FILENAMES[mySave] + ".ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             myMaze = (Maze) in.readObject();
+            myQuestionLog = new QuestionLog();
             in.close();
             fileIn.close();
 
