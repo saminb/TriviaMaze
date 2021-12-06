@@ -12,8 +12,7 @@ import java.awt.event.WindowEvent;
 
 public class MazeFrame extends JFrame implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
-	
+    private static final long serialVersionUID = 1L;
 	private static final String[] FILENAMES = {"", "File 1", "File 2", "File 3"};
     private Maze myMaze;
 
@@ -455,10 +454,9 @@ public class MazeFrame extends JFrame implements ActionListener {
             } else {
                 questionUp = true;
                 questionDir = Dir;
-                //The logic for calling and answering a question goes here.
-                //Right now, it's set up as if you always get the answer wrong.
+
                 myQuestionManager.poseQuestion();
-                Question question = myQuestionManager.getLastQuestion(); // imported Question object; other solution?
+                Question question = myQuestionManager.getLastQuestion();
                 String[] questionData = { question.getQuestion(), question.getAnswer() };                answerQuestion(question.getAnsweredResult());
                 myQuestionLog.addData(questionData);
             }
