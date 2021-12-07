@@ -1,4 +1,5 @@
 package question;
+
 import javax.swing.*;
 
 import javax.swing.border.TitledBorder;
@@ -11,10 +12,11 @@ import javax.swing.table.*;
  * It creates a frame with table with the information about questions answered.
  */
 public class QuestionLog {
-	private DefaultTableModel qTableModel;
-	private JTable logTable;
-	private JFrame questionLogFrame;
-	private JPanel questionLogPanel;
+	private DefaultTableModel 	qTableModel;
+	private JTable 				logTable;
+	private JFrame 				questionLogFrame;
+	private JPanel 				questionLogPanel;
+	private JScrollPane 		scrollPane;
 	
 	
 	/**
@@ -32,17 +34,25 @@ public class QuestionLog {
 		questionLogFrame= new JFrame();
 		questionLogPanel= new JPanel();
 		
-		String[] columnNames= {"Questions", "Your Answers"};
-		this.qTableModel= new DefaultTableModel(columnNames,0);
-		logTable= new JTable(this.qTableModel);
 		questionLogFrame.setTitle("Question Log");
 		questionLogFrame.setContentPane(questionLogPanel);
 		questionLogFrame.setSize(500,500);
 		questionLogFrame.setVisible(false);
-		logTable.setBounds(10, 10, 10, 10);
-		questionLogPanel.setBorder(BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Question Log", TitledBorder.CENTER, TitledBorder.TOP));
-		questionLogPanel.add(logTable);
+
+		String[] columnNames= {"Questions", "Your Answers"};
+		this.qTableModel= new DefaultTableModel(columnNames,0);
+		logTable= new JTable(this.qTableModel);
 		logTable.setModel(qTableModel);
+		logTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		logTable.getColumnModel().getColumn(0).setPreferredWidth(300);
+		logTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+		logTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		scrollPane = new JScrollPane(logTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+		questionLogPanel.setBorder(BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Question Log", TitledBorder.CENTER, TitledBorder.TOP));
+		questionLogPanel.add(scrollPane);
+		
 		}
 	
 	/**
@@ -56,7 +66,7 @@ public class QuestionLog {
         System.out.println("data is now added to the qTable");
         System.out.println(this.qTableModel.getDataVector());
     }   
-    
+ 
     public void setVisible() {
     	questionLogFrame.setVisible(true);
     }
