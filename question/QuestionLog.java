@@ -5,70 +5,73 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.*;
 
-
 /**
- *@author samin
- * This class create the functionality of  question log. 
- * It creates a frame with table with the information about questions answered.
+ * QuestionLog displays a history of the questions that have been asked so far in the TriviaMaze.
+ * @author Joshua Lee, Samin Bahizad, Logan Martison
+ * @version
+ * 
  */
 public class QuestionLog {
-	private DefaultTableModel 	qTableModel;
-	private JTable 				logTable;
-	private JFrame 				questionLogFrame;
-	private JPanel 				questionLogPanel;
-	private JScrollPane 		scrollPane;
-	
+	private DefaultTableModel 	myQTableModel;
+	private JTable 				myLogTable;
+	private JFrame 				myQuestionLogFrame;
+	private JPanel 				myQuestionLogPanel;
+	private JScrollPane 		myScrollPane;
 	
 	/**
-	 * Calls initializePanel() to create the questionlog panel
+	 * Calls initializePanel() to initialize the contents of the myQuestionLogPanel.
 	 */
 	public QuestionLog() {
 		initializePanel();
 	}
 	
 	/**
-	 * Create the questionlog frame and panel
+	 * Creates and customizes myQuestionLogFrame and myQuestionLogPanel.
 	 */
 	private void initializePanel() {
 		
-		questionLogFrame= new JFrame();
-		questionLogPanel= new JPanel();
+		myQuestionLogFrame = new JFrame();
+		myQuestionLogPanel = new JPanel();
 		
-		questionLogFrame.setTitle("Question Log");
-		questionLogFrame.setContentPane(questionLogPanel);
-		questionLogFrame.setSize(500,500);
-		questionLogFrame.setVisible(false);
+		myQuestionLogFrame.setTitle("Question Log");
+		myQuestionLogFrame.setContentPane(myQuestionLogPanel);
+		myQuestionLogFrame.setSize(500,500);
+		myQuestionLogFrame.setVisible(false);
 
-		String[] columnNames= {"Questions", "Your Answers"};
-		this.qTableModel= new DefaultTableModel(columnNames,0);
-		logTable= new JTable(this.qTableModel);
-		logTable.setModel(qTableModel);
-		logTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		logTable.getColumnModel().getColumn(0).setPreferredWidth(300);
-		logTable.getColumnModel().getColumn(1).setPreferredWidth(200);
-		logTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		String[] columnNames = {"Questions", "Your Answers"};
+		this.myQTableModel = new DefaultTableModel(columnNames,0);
+		myLogTable = new JTable(this.myQTableModel);
+		myLogTable.setModel(myQTableModel);
+		myLogTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		myLogTable.getColumnModel().getColumn(0).setPreferredWidth(300);
+		myLogTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+		myLogTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
-		scrollPane = new JScrollPane(logTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		myScrollPane = new JScrollPane(myLogTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-		questionLogPanel.setBorder(BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Question Log", TitledBorder.CENTER, TitledBorder.TOP));
-		questionLogPanel.add(scrollPane);
+		myQuestionLogPanel.setBorder(BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Question Log", TitledBorder.CENTER, TitledBorder.TOP));
+		myQuestionLogPanel.add(myScrollPane);
 		
 		}
 	
 	/**
-	 * Adds more data to the questionlog table when it is called
+	 * Takes data and adds it visually to the QuestionLog.
+	 * @param theData to be added.
 	 */
-    public void addData(Object[] data)
+    public void addData(Object[] theData)
     {
-        logTable.setAutoCreateColumnsFromModel(true);
-    	this.qTableModel.addRow(data);
-        logTable.setModel(this.qTableModel);
+        myLogTable.setAutoCreateColumnsFromModel(true);
+    	this.myQTableModel.addRow(theData);
+        myLogTable.setModel(this.myQTableModel);
         System.out.println("data is now added to the qTable");
-        System.out.println(this.qTableModel.getDataVector());
+        System.out.println(this.myQTableModel.getDataVector());
     }   
  
+    /**
+     * Sets myQuestionLogFrame to be visible to display the question log.
+     */
     public void setVisible() {
-    	questionLogFrame.setVisible(true);
+    	myQuestionLogFrame.setVisible(true);
     }
 
 	
