@@ -1,9 +1,14 @@
 package question;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+/**
+* 
+* @author samin
+*
+*/
 public class DatabaseConnection {
 	private Connection connection;
 

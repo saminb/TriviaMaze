@@ -1,5 +1,10 @@
 package question;
-
+/**
+ * 
+ * @author Josh
+ * @author samin
+ *
+ */
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +18,10 @@ import java.util.Random;
 
 /**
  * 
- * @author joshu
+ * This class gets the connection to the database and gets the data from the database.
+ * From the collected data, it gets the total number of question, a random list of questions in a 
+ * question queue and keeps track of used question.
+ * 
  *
  */
 public class QuestionDatabaseManager {
@@ -32,6 +40,10 @@ public class QuestionDatabaseManager {
 	
 	}
 	
+	/**	method that gets the connection
+	 * 
+	 * @return connection
+	 */
 	private Connection connect() throws SQLException {
         return database.getConnection();
     }
@@ -60,6 +72,11 @@ public class QuestionDatabaseManager {
 		return count;
 	}
 	
+	/**	gets the total count from the private method getTotalQuestions()
+	 * this will avoid data leak
+	 * 
+	 * @return totalCount
+	 */
 	public int getTotalQuestionCount() {
 		return totalCount;
 	}
@@ -78,25 +95,49 @@ public class QuestionDatabaseManager {
 		}
 		return question;
 	}
+	
+	/**gets the database
+	 * 
+	 * @return database
+	 */
+	
 	public DatabaseConnection getDB() throws SQLException {
 		return database;
 	}
 	
+	/**gets the last question asked from the asked question linkedlist
+	 * this is used for the questionlog
+	 * 
+	 * @return last asked question
+	 */
 	public Question getLastQuestion() {
 		return getAskedQuestions().getLast();
 	}
 	
-	public boolean poseQuestion() { // Method used to initiate the Question Answer process
+	/** Method used to initiate the Question Answer process
+	 * 
+	 * @return boolean poseQuestion
+	 */
+	public boolean poseQuestion() { 
 		Question nextQuestion = this.getQuestion();
 		nextQuestion.askQuestion();
 		getAskedQuestions().add(nextQuestion);
-		return nextQuestion.getAnsweredResult(); 
+		boolean poseQuestion=nextQuestion.getAnsweredResult(); 
+		return poseQuestion; 
 	}
 	
+	/** gets the queue from the private method 
+	 * 
+	 * @return questionsQueue
+	 */
 	public Queue<Question>getQuestionsQueue(){
 		return questionsQueue;
 	}
 	
+	/** gets data from database and places it randomly in the queue
+	 * 
+	 * @return final result
+	 */
 	@SuppressWarnings("resource")
 	private Queue<Question> getQuestionsList(){
 		Question[] result = new Question[totalCount];
@@ -149,6 +190,7 @@ public class QuestionDatabaseManager {
 					e.printStackTrace();
 				}
         }
+		
 		/** Using random to get a shuffled list for the questions
 		 * 
 		 */
@@ -166,11 +208,17 @@ public class QuestionDatabaseManager {
 		}
 		return finalResult;
 	}
-
+	
+	/** gets linkedlist for asked questions
+	 * 
+	 * @return askedQuestions;
+	 */
 	public LinkedList<Question> getAskedQuestions() {
 		return askedQuestions;
 	}
-
+	
+	/** sets linkedlist for asked questions
+	 */
 	public void setAskedQuestions(LinkedList<Question> askedQuestions) {
 		this.askedQuestions = askedQuestions;
 	}

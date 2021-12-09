@@ -7,7 +7,8 @@ package question;
  * 
  * MultipleChoice will be one of the types of questions that users are prompted with in Trivia Maze.
  * 
- * @author Joshua Lee
+ * @author joshu
+ * @author samin
  * @version
  *
  */
