@@ -83,7 +83,7 @@ public class QuestionGUI {
 	public JTextArea createTitle(String theQuestion) {
 		JTextArea newTitle = new JTextArea(theQuestion);
 		newTitle.setEditable(false);
-		newTitle.setLineWrap(true);
+		newTitle.setWrapStyleWord(true);
 		newTitle.setFont(new Font("Helvetica", Font.BOLD, 20));
 		newTitle.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		newTitle.setOpaque(false);

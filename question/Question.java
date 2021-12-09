@@ -154,7 +154,7 @@ public class Question {
 	 */
 	public boolean processAnswer(String theAnswer) {
 		System.out.println(this.getAnswer());
-		if (theAnswer.equals(this.getAnswer())) {
+		if (theAnswer.equalsIgnoreCase(this.getAnswer())) {
 			this.setAnsweredResult(true);
 			return true;
 		}
