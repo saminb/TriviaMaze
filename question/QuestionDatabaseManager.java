@@ -47,13 +47,6 @@ public class QuestionDatabaseManager {
 	 */
 	private LinkedList<Question> myAskedQuestions;
 	
-	public QuestionDatabaseManager(String theDbName) {
-		myDatabase = new DatabaseConnection(theDbName);
-		myTotalCount = getTotalQuestions();
-		myQuestionsQueue = getQuestionsList();
-		setAskedQuestions(new LinkedList<Question>());
-	}
-	
 	/**	
 	 * Returns the connection object to the database.
 	 * @return connection
@@ -61,6 +54,13 @@ public class QuestionDatabaseManager {
 	private Connection connect() throws SQLException {
         return myDatabase.getConnection();
     }
+	
+	public QuestionDatabaseManager(String theDbName) {
+		myDatabase = new DatabaseConnection(theDbName);
+		myTotalCount = getTotalQuestions();
+		myQuestionsQueue = getQuestionsList();
+		setAskedQuestions(new LinkedList<Question>());
+	}
 
 	/**	
 	 * Retrieves the total number of questions in the database.
@@ -82,72 +82,6 @@ public class QuestionDatabaseManager {
 			e.printStackTrace();
 		}
 		return count;
-	}
-	
-	/**	
-	 * Gets the total count of questions using the private method getTotalQuestions()
-	 * to avoid data leak.
-	 * @return totalCount
-	 */
-	public int getTotalQuestionCount() {
-		return myTotalCount;
-	}
-	
-	/**
-	 * Retrieves a unique question from the list of questions that has not yet been asked,
-	 * and shuffles the remaining list of questions.
-	 * @return question
-	 */
-	public Question getQuestion() {
-		Question question = myQuestionsQueue.poll();
-		getAskedQuestions().add(question);
-		if(myQuestionsQueue.isEmpty()) {
-			Collections.shuffle(getAskedQuestions());
-			myQuestionsQueue.addAll(getAskedQuestions());
-			getAskedQuestions().clear();
-		}
-		return question;
-	}
-	
-	/**
-	 * Retrieves the database (DatabaseConnection object).
-	 * @return myDatabase
-	 */
-	
-	public DatabaseConnection getDB() throws SQLException {
-		return myDatabase;
-	}
-	
-	/**
-	 * Gets the last question asked from myAskedQuestions().
-	 * This will function as data for the questionLog.
-	 * 
-	 * @return The last asked question
-	 */
-	public Question getLastQuestion() {
-		return getAskedQuestions().getLast();
-	}
-	
-	/** 
-	 * Method used to initiate the Question Answer process. Returns true
-	 * once the process has completed.
-	 * 
-	 * @return boolean poseQuestion
-	 */
-	public boolean poseQuestion() { 
-		Question nextQuestion = this.getQuestion();
-		nextQuestion.askQuestion();
-		getAskedQuestions().add(nextQuestion);
-		boolean poseQuestion = nextQuestion.getAnsweredResult(); 
-		return poseQuestion; 
-	}
-	
-	/** 
-	 * Gets and returns the question queue list of questions.
-	 * @return questionsQueue
-	 */
-	public Queue<Question>getQuestionsQueue(){
-		return myQuestionsQueue;
 	}
 	
 	/** 
@@ -224,6 +158,72 @@ public class QuestionDatabaseManager {
 			finalResult.add(result[i]);
 		}
 		return finalResult;
+	}
+	
+	/**	
+	 * Gets the total count of questions using the private method getTotalQuestions()
+	 * to avoid data leak.
+	 * @return totalCount
+	 */
+	public int getTotalQuestionCount() {
+		return myTotalCount;
+	}
+	
+	/**
+	 * Retrieves a unique question from the list of questions that has not yet been asked,
+	 * and shuffles the remaining list of questions.
+	 * @return question
+	 */
+	public Question getQuestion() {
+		Question question = myQuestionsQueue.poll();
+		getAskedQuestions().add(question);
+		if(myQuestionsQueue.isEmpty()) {
+			Collections.shuffle(getAskedQuestions());
+			myQuestionsQueue.addAll(getAskedQuestions());
+			getAskedQuestions().clear();
+		}
+		return question;
+	}
+	
+	/**
+	 * Retrieves the database (DatabaseConnection object).
+	 * @return myDatabase
+	 */
+	
+	public DatabaseConnection getDB() throws SQLException {
+		return myDatabase;
+	}
+	
+	/**
+	 * Gets the last question asked from myAskedQuestions().
+	 * This will function as data for the questionLog.
+	 * 
+	 * @return The last asked question
+	 */
+	public Question getLastQuestion() {
+		return getAskedQuestions().getLast();
+	}
+	
+	/** 
+	 * Method used to initiate the Question Answer process. Returns true
+	 * once the process has completed.
+	 * 
+	 * @return boolean poseQuestion
+	 */
+	public boolean poseQuestion() { 
+		Question nextQuestion = this.getQuestion();
+		nextQuestion.askQuestion();
+		getAskedQuestions().add(nextQuestion);
+		boolean poseQuestion = nextQuestion.getAnsweredResult(); 
+		return poseQuestion; 
+	}
+	
+	/** 
+	 * Gets and returns the question queue list of questions.
+	 * @return questionsQueue
+	 */
+	public Queue<Question>getQuestionsQueue(){
+		return myQuestionsQueue;
 	}
 	
 	/** 
