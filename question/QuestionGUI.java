@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-
 /**
  * The QuestionGUI class constructs and displays the GUI for TriviaMaze to prompt
  * the user to answer the question. QuestionGUI appears when the user clicks a door
@@ -12,7 +11,7 @@ import javax.swing.*;
  * is called. Question GUI will also update the Question object it is passed with the
  * input from the user.
  * 
- * @author joshu
+ * @author Joshua Lee, Samin Bahizad, Logan Martinson
  * @version
  *
  */
@@ -50,8 +49,19 @@ public class QuestionGUI {
 		
 		myFrame = new JDialog(null, Dialog.ModalityType.DOCUMENT_MODAL);
 		myFrame.setMinimumSize(new Dimension(500, 350));
-		myFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		myFrame.setLayout(new BorderLayout());	
+		
+		myFrame.addWindowListener(new WindowAdapter() {
+			@Override
+            public void windowClosing(WindowEvent e) {
+                if (!isFinished) {
+                	theQuestion.processAnswer("");
+                	isFinished = true;
+                }
+                myFrame.dispose();
+            
+            }
+        });
 		
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -102,6 +112,8 @@ public class QuestionGUI {
 		ButtonGroup group = new ButtonGroup();
 		JTextField input = new JTextField();
 		String type = theQuestion.getType();
+		JButton submitButton = new JButton("Submit");
+		submitButton.setEnabled(false);
 		if (type.equals("SA")) {
 			thePanel.add(input);
 		} else {
@@ -111,14 +123,19 @@ public class QuestionGUI {
 			} else {
 				answerChoices = ((MultipleChoice) theQuestion).getChoices();
 			}
+			
 			for (int i = 0; i < answerChoices.length; i++) {
 				JRadioButton answer = new JRadioButton(answerChoices[i]);
 				group.add(answer);
 				thePanel.add(answer);
 				answer.setActionCommand(answerChoices[i]);
+				answer.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						submitButton.setEnabled(true);
+					}
+				});
 			}
 		}
-		JButton submitButton = new JButton("Submit");
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Make it so submit can only be pressed if a radio option is selected/handle error for no selection

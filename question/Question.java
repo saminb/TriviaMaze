@@ -5,8 +5,7 @@ package question;
  * necessary for a Question-Answer type object, including the type of the question (Multiple Choice, True False,
  * Short Answer). The Question object is also responsible for calling and opening the GUI for the question.
  * 
- * @author	Joshua Lee
- * @author samin
+ * @author	Joshua Lee, Samin Bahizad, Logan Martinson
  * @version: 
  * 
  */
@@ -15,22 +14,22 @@ public class Question {
 	/** 
 	 * The type of the question (TF, SA, MC).
 	 */
-	private String myType;
+	private final String myType;
 	
 	/**
 	 * The question to be asked.
 	 */
-	private String myQuestion;
+	private final String myQuestion;
 	
 	/**
 	 * The true answer of the question.
 	 */
-	private String myAnswer;
+	private final String myAnswer;
 	
 	/**
 	 * The ID of the question, which is unique for each Question object.
 	 */
-	private String myQID;
+	private final String myQID;
 	
 	/**
 	 * The status of whether the question has been asked yet.
@@ -52,11 +51,11 @@ public class Question {
 	 * @param theAnswer		The answer to the question.
 	 */
 	public Question(String theQID,String theType,String theQuestion, String theAnswer) {
-		this.myType 	= theType;
-        this.myQuestion = theQuestion;
-        this.myAnswer 	= theAnswer;
-        this.myQID		= theQID;
-        this.hasBeenAsked = false;
+		myType 		 = theType;
+        myQuestion 	 = theQuestion;
+        myAnswer 	 = theAnswer;
+        myQID		 = theQID;
+        hasBeenAsked = false;
     }
 	
 	/**
@@ -76,22 +75,6 @@ public class Question {
 	}
 	
 	/**
-	 * Sets the Question object's question to theQuestion given.
-	 * @param theQuestion the new question.
-	 */
-	public void setQuestion(String theQuestion) {
-		this.myQuestion = theQuestion;
-	}
-	
-	/**
-	 * Sets the Question object's answer to theAnswer given.
-	 * @param theAnswer the new answer.
-	 */
-	public void setAnswer(String theAnswer) {
-		this.myAnswer = theAnswer;
-	}
-	
-	/**
 	 * Retrieves the question type of the question.
 	 * @return the type (MC, SA, TF).
 	 */
@@ -105,14 +88,6 @@ public class Question {
 	 */
 	public String getQID() {
 		return this.myQID;
-	}
-	
-	/**
-	 * Sets the QID of the question to the given QID.
-	 * @param theQID the new QID.
-	 */
-	public void setQID(String theQID) {
-		this.myQID = theQID;
 	}
 	
 	/**
@@ -135,7 +110,7 @@ public class Question {
 	 * @param theResult the correctness of the user's answer.
 	 */
 	public void setAnsweredResult(boolean theResult) {
-		this.hasCorrectAnswer = theResult;
+		hasCorrectAnswer = theResult;
 	}
 	
 	/**
