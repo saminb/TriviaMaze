@@ -88,16 +88,16 @@ public class QuestionDatabaseManagerTest {
 	}
 	@Test
 	public void getQuestionTest() throws SQLException {
-		Question[] questions1 = new Question[test.getTotalQuestionCount()];
+		Question[] q1 = new Question[test.getTotalQuestionCount()];
 		for (int i = 0; i < test.getTotalQuestionCount(); i++) {
-			questions1[i] = test.getQuestion();
+			q1[i] = test.getQuestion();
 		}
-		Question[] questions2 = new Question[test.getTotalQuestionCount()];
+		Question[] q2 = new Question[test.getTotalQuestionCount()];
 		for (int i = 0; i < test.getTotalQuestionCount(); i++) {
-			questions2[i] = test.getQuestion();
+			q2[i] = test.getQuestion();
 		}
 		after();
-		assertNotEquals(Arrays.toString(questions1), Arrays.toString(questions2));
+		assertNotEquals(Arrays.toString(q1), Arrays.toString(q2));
 	}
 	@Test
 	public void getQuestionReuseTest() throws SQLException {
