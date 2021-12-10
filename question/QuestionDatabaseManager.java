@@ -40,38 +40,6 @@ public class QuestionDatabaseManager {
 	
 	}
 	
-	/**	method that gets the connection
-	 * 
-	 * @return connection
-	 */
-	private Connection connect() throws SQLException {
-        return database.getConnection();
-    }
-
-
-	/**	getting the total number of questions in the database
-	 * 
-	 * @return count
-	 */
-	
-	private int getTotalQuestions() {
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		int count=-1;
-		try {
-			connection= connect();
-			String sql = "SELECT count(QID) FROM Question_Bank;";
-			stmt= connection.prepareStatement(sql);
-			rs= stmt.executeQuery();
-			count = rs.getInt(1);
-			} 
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-
-		return count;
-	}
-	
 	/**	gets the total count from the private method getTotalQuestions()
 	 * this will avoid data leak
 	 * 
@@ -96,9 +64,9 @@ public class QuestionDatabaseManager {
 		return question;
 	}
 	
-	/**gets the database
+	/**gets the database used testing
 	 * 
-	 * @return database
+	 * @return database 
 	 */
 	
 	public DatabaseConnection getDB() throws SQLException {
@@ -132,6 +100,52 @@ public class QuestionDatabaseManager {
 	 */
 	public Queue<Question>getQuestionsQueue(){
 		return questionsQueue;
+	}
+	
+	/** gets linkedlist for asked questions
+	 * 
+	 * @return askedQuestions;
+	 */
+	public LinkedList<Question> getAskedQuestions() {
+		return askedQuestions;
+	}
+	
+	/** sets linkedlist for asked questions
+	 */
+	public void setAskedQuestions(LinkedList<Question> askedQuestions) {
+		this.askedQuestions = askedQuestions;
+	}
+	
+	/**	method that gets the connection
+	 * 
+	 * @return connection
+	 */
+	private Connection connect() throws SQLException {
+        return database.getConnection();
+    }
+
+
+	/**	getting the total number of questions in the database
+	 * 
+	 * @return count
+	 */
+	
+	private int getTotalQuestions() {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int count=-1;
+		try {
+			connection= connect();
+			String sql = "SELECT count(QID) FROM Question_Bank;";
+			stmt= connection.prepareStatement(sql);
+			rs= stmt.executeQuery();
+			count = rs.getInt(1);
+			} 
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+
+		return count;
 	}
 	
 	/** gets data from database and places it randomly in the queue
@@ -207,20 +221,6 @@ public class QuestionDatabaseManager {
 			finalResult.add(result[i]);
 		}
 		return finalResult;
-	}
-	
-	/** gets linkedlist for asked questions
-	 * 
-	 * @return askedQuestions;
-	 */
-	public LinkedList<Question> getAskedQuestions() {
-		return askedQuestions;
-	}
-	
-	/** sets linkedlist for asked questions
-	 */
-	public void setAskedQuestions(LinkedList<Question> askedQuestions) {
-		this.askedQuestions = askedQuestions;
 	}
 
 }
