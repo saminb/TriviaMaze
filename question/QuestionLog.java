@@ -22,13 +22,13 @@ public class QuestionLog {
 	 * Calls initializePanel() to initialize the contents of the myQuestionLogPanel.
 	 */
 	public QuestionLog() {
-		initializePanel();
+		initialize();
 	}
 	
 	/**
 	 * Creates and customizes myQuestionLogFrame and myQuestionLogPanel.
 	 */
-	private void initializePanel() {
+	private void initialize() {
 		
 		myQuestionLogFrame = new JFrame();
 		myQuestionLogPanel = new JPanel();
