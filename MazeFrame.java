@@ -23,7 +23,7 @@ public class MazeFrame extends JFrame implements ActionListener {
     private JPanel roomView, textView, textViewL;
     private JLabel flavorText, flavorTextL;
     private JButton upButton, downButton, leftButton, rightButton, player;
-    private ImageIcon lock, wall, wrong, blank;
+    private ImageIcon lock, wall, wrong, blank, title;
     private ImageIcon[] goDir, playerSprites;
     private JMenuItem exit, about, instructions, questionLog, cheats;
     private JMenuItem newEasy, newMedi, newHard, save1, save2, save3, load1, load2, load3;
@@ -91,6 +91,7 @@ public class MazeFrame extends JFrame implements ActionListener {
         wall = new ImageIcon("gfx/Wall.png");
         wrong = new ImageIcon("gfx/Wrong.png");
         blank = new ImageIcon("gfx/Blank.png");
+        title = new ImageIcon("gfx/Title.png");
 
         goDir = new ImageIcon[4];
         goDir[0] = new ImageIcon("gfx/GoUp.png");
@@ -129,7 +130,7 @@ public class MazeFrame extends JFrame implements ActionListener {
         player = new JButton();
         player.setBounds(200, 100, 100, 100);
         player.addActionListener(this);
-        player.setIcon(playerSprites[0]);
+        player.setIcon(title);
     }
 
     private void initializeMenu() {
