@@ -21,7 +21,7 @@ import java.util.Random;
  *
  */
 public class QuestionDatabaseManager {
-	
+
 	/**
 	 * the Connection to the database.
 	 */

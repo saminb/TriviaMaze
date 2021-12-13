@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+
 /**
  * The QuestionGUI class constructs and displays the GUI for TriviaMaze to prompt
  * the user to answer the question. QuestionGUI appears when the user clicks a door
@@ -79,8 +80,9 @@ public class QuestionGUI {
 			
 		myFrame.add(title, BorderLayout.PAGE_START);
 		myFrame.add(myBox, BorderLayout.CENTER);
-		myFrame.add(instr, BorderLayout.PAGE_END);
+		//myFrame.add(instr, BorderLayout.PAGE_END);
 		myFrame.pack();
+		myFrame.setLocationRelativeTo(null);
 		myFrame.setVisible(true);
 		
 	}
@@ -90,7 +92,7 @@ public class QuestionGUI {
 	 * @param theQuestion the question asked.
 	 * @return The GUI Title
 	 */
-	public JTextArea createTitle(String theQuestion) {
+	private JTextArea createTitle(String theQuestion) {
 		JTextArea newTitle = new JTextArea(theQuestion);
 		newTitle.setEditable(false);
 		newTitle.setWrapStyleWord(true);
@@ -113,10 +115,10 @@ public class QuestionGUI {
 		JTextField input = new JTextField();
 		String type = theQuestion.getType();
 		JButton submitButton = new JButton("Submit");
-		submitButton.setEnabled(false);
 		if (type.equals("SA")) {
 			thePanel.add(input);
 		} else {
+			submitButton.setEnabled(false);
 			String[] answerChoices;
 			if (type.equals("T/F")) {
 				answerChoices = ((TrueFalse) theQuestion).getChoices();
@@ -129,13 +131,16 @@ public class QuestionGUI {
 				group.add(answer);
 				thePanel.add(answer);
 				answer.setActionCommand(answerChoices[i]);
+				
 				answer.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						submitButton.setEnabled(true);
 					}
 				});
+				
 			}
 		}
+		
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Make it so submit can only be pressed if a radio option is selected/handle error for no selection
@@ -153,6 +158,7 @@ public class QuestionGUI {
 				restartFrameForAnswer();	
 			}
 		});
+		
 		myBox.add(submitButton, BorderLayout.PAGE_END);
 	}
 	
@@ -196,6 +202,7 @@ public class QuestionGUI {
 		myFrame.setMaximumSize(new Dimension(300, 300));
 		myFrame.repaint();
 		myFrame.pack();
+		myFrame.setLocationRelativeTo(null);
 		myFrame.setVisible(true);
 	}
 	

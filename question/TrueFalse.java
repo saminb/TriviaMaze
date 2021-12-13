@@ -7,8 +7,7 @@ package question;
  * 
  * TrueFalse will be one of the types of questions that users are prompted with in Trivia Maze.
  * 
- * @author joshu
- * @author samin
+ * @author Joshua Lee, Samin Bahizad, Logan Martinson
  * @version
  *
  */
@@ -29,9 +28,7 @@ public class TrueFalse extends Question {
 	 */
 	public TrueFalse(String theQID, String theType, String theQuestion, String theAnswer, String[] theChoices) {
 		super(theQID, theType, theQuestion, theAnswer);
-		this.myChoices = new String[2]; // Should True False choices be decided here or in QDB manager?
-		myChoices[0] = "True";
-		myChoices[1] = "False";
+		this.myChoices = theChoices;
 	}
 	
 	/**
