@@ -1,0 +1,259 @@
+[START commit][author=leejos5][time=1639426640][message=Refactored into src folder, bugfixes][hash=568b16d4b5ecaefa6b580f44b43f057642933edd]
+ 9 files changed, 956 insertions(+), 941 deletions(-)
+
+[START commit][author=saminb][time=1639163098][message=edit][hash=a89a06d1eef7d25fb717919efd71b57eb4472989]
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+[START commit][author=saminb][time=1639162540][message=clean up][hash=827238e94f238e948f374b0dd78056aa8b5abe82]
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+[START commit][author=saminb][time=1639162438][message=clean up][hash=4cac13d95e0507612ed5ec39e69e868d739ace51]
+ 1 file changed, 73 insertions(+), 73 deletions(-)
+
+[START commit][author=saminb][time=1639162265][message=updated format][hash=5547733e27bb20d0cb1c9e02ec7f343b88ed2b30]
+[START commit][author=saminb][time=1639161761][message=update][hash=84591ab719e5504dc766419e84834cf3e54956ef]
+ 1 file changed, 48 insertions(+), 48 deletions(-)
+
+[START commit][author=Logan][time=1639097642][message=Merge branch 'main' of https://github.com/saminb/TriviaMaze][hash=92ef7ea23ff2360678b4f96973692dc0749ab527]
+[START commit][author=Logan][time=1639097624][message=added title image][hash=964e55ef75a76069724bc4f3be624bdf9d17dd34]
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+[START commit][author=leejos5][time=1639094085][message=Added javadoc, consistent code standards][hash=0e35437ca3ddf472d19d5a4dbb39eb04e931400b]
+ 8 files changed, 204 insertions(+), 174 deletions(-)
+
+[START commit][author=leejos5][time=1639020836][message=Merge conflicts][hash=4634d9e16f16e03935adc55d5661e2cef9a210d0]
+[START commit][author=leejos5][time=1639020395][message=Merge conflicts][hash=e5b8b08eec026fe0fd65bd2e66cc50bff34a608c]
+ 4 files changed, 3 insertions(+), 3 deletions(-)
+
+[START commit][author=saminb][time=1638920328][message=updated QuestionLog][hash=0c5ea879334960ba6c4e4c03e6ccba1f4d02d7e0]
+ 5 files changed, 29 insertions(+), 13 deletions(-)
+
+[START commit][author=saminb][time=1638831513][message=updated java doc][hash=7ab7a3abd2fe25ec2c8d1b9f7d6c6e376b564c2d]
+ 1 file changed, 1 insertion(+)
+
+[START commit][author=saminb][time=1638831434][message=updated java doc][hash=19479c3bc335fa598bd9b74091b11b50dc2b4a5b]
+ 7 files changed, 100 insertions(+), 23 deletions(-)
+
+[START commit][author=saminb][time=1638819408][message=removed excess folder][hash=873867eed0dda7eb998d70431f1e26c342912fa0]
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+[START commit][author=Logan][time=1638766381][message=minor updates to MazeFrame][hash=40edf5f4ad78f16644cad91354e341ed78dc0bad]
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+
+[START commit][author=LoganMartinson][time=1638766269][message=Updated .gitignore][hash=389551abab7b0c786cc5dd0d15f6422f3f964d59]
+ 1 file changed, 1 insertion(+)
+
+[START commit][author=LoganMartinson][time=1638765998][message=Updated .gitignore][hash=98ccb1dcbae2905d80fd67b7a12b9b9c4ab69b3e]
+ 1 file changed, 4 insertions(+)
+
+[START commit][author=LoganMartinson][time=1638765954][message=Removing accidentally added file][hash=8786c3f7a708b1baf1f83d83d23b9855a455be10]
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+[START commit][author=LoganMartinson][time=1638765938][message=Removing accidentally added file][hash=4a01468b8c93844f91b7cd59b2122a1d5405d1d2]
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+[START commit][author=LoganMartinson][time=1638765925][message=Removing accidentally added file][hash=ae24fdf92aa1421ce0da1e7d40557eeca4eabe81]
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+[START commit][author=LoganMartinson][time=1638765910][message=Removing accidentally added file][hash=fe56da661c6e02257f2853c6d859d9ed581fd19f]
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+[START commit][author=LoganMartinson][time=1638765896][message=Removing accidentally added file][hash=d579b534201ec6e87a1ec99e5e302430bee5ee6c]
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+[START commit][author=Logan][time=1638765715][message=modifications to MazeFrame][hash=fc72afe8b9edfbadd7cbc77a788a9d4329b49b33]
+ 7 files changed, 28 insertions(+), 14 deletions(-)
+
+[START commit][author=LoganMartinson][time=1638765625][message=Removed Maze classes from gitignore file][hash=6f1b5fdea9909610dbfda036529f33de067d561f]
+ 1 file changed, 7 deletions(-)
+
+[START commit][author=Logan][time=1638762297][message=added folder for saved games][hash=1449e0eb9e0e9f6908e81e9971c4db3bb6edb5c3]
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+[START commit][author=saminb][time=1638676396][message=test updates][hash=f4cbe4c528a8e7f770250271590d3651c4d94a0a]
+[START commit][author=saminb][time=1638676371][message=test updates][hash=2eb7bb16a3a4639e1bd8cef81e873294696f9505]
+ 3 files changed, 18 insertions(+), 17 deletions(-)
+
+[START commit][author=saminb][time=1638671896][message=test update][hash=af8e13fd868b84418463fbb5eb66071eb4bdd560]
+[START commit][author=saminb][time=1638671733][message=test update][hash=61f24205299c061c530218e07730863115753a23]
+ 3 files changed, 23 insertions(+), 3 deletions(-)
+
+[START commit][author=leejos5][time=1638670776][message=Linked question log to Maze Frame.][hash=c2a5d6156e213fc891e5ccf3acacfc728242097b]
+ 3 files changed, 12 insertions(+), 15 deletions(-)
+
+[START commit][author=leejos5][time=1638666921][message=Added javadoc to question objects.][hash=955a2108c0374e11e25426a2eff58a25ab94e028]
+ 8 files changed, 146 insertions(+), 344 deletions(-)
+
+[START commit][author=leejos5][time=1638589378][message=Fixed merge conflicts.][hash=5c5dfb239d9f9ab158d4926383f6b883bb0cfd70]
+[START commit][author=leejos5][time=1638588993][message=Bugfixed input processing.][hash=3eb6f5124bbf26f77a827bdc3120dfe7181b341e]
+ 8 files changed, 36 insertions(+), 40 deletions(-)
+
+[START commit][author=saminb][time=1638576437][message=database connection update][hash=fd1cdde7df9cee5f62e76a0af247d23e86a06dd5]
+[START commit][author=saminb][time=1638576358][message=updated connection][hash=bcb8543dfe06823220a4d4e07d2db2326d7bfb6d]
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+[START commit][author=saminb][time=1638576265][message=new fixed database connection][hash=f0fac854f2e0bd80c53531b5b94af4236d7bb7b8]
+ 5 files changed, 80 insertions(+), 92 deletions(-)
+
+[START commit][author=saminb][time=1638567500][message=removed excess folder][hash=51127a639b109c8d27b6960ee00f3d826ac6bc5f]
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+[START commit][author=leejos5][time=1638563055][message=rollback][hash=cafd0b2192758c68f53e7cca49c4d9d89291b2c3]
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+[START commit][author=leejos5][time=1638558187][message=Fixed merge conflicts][hash=f052d15ea8df0f9757034c50a748e69d9654308f]
+[START commit][author=leejos5][time=1638557182][message=Question polishing][hash=754ba14137859fddc0a5661ba074732acf408fff]
+ 4 files changed, 10 insertions(+), 7 deletions(-)
+
+[START commit][author=LoganMartinson][time=1638476951][message=Made NewGame, SaveGame, and LoadGame submenus][hash=6bf55a2af10977a8eae88bf9a0ae0f1957813d26]
+ 1 file changed, 74 insertions(+), 24 deletions(-)
+
+[START commit][author=saminb][time=1638470892][message=updated package name][hash=1e3cf37cdcd5fcd7482a75db938ed25412712832]
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+[START commit][author=saminb][time=1638420057][message=initial tests][hash=79423700e6b517c3afb22914db47e24b2a9e7339]
+ 2 files changed, 79 insertions(+), 14 deletions(-)
+
+[START commit][author=LoganMartinson][time=1638414683][message=Minor fix to answerQuestion method][hash=39740d1637d4044371700ad9910bb71ee9d7ede8]
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+[START commit][author=LoganMartinson][time=1638413923][message=Added answerQuestion method][hash=0f964680d73cad87f31a133a2d5e29e6365b74e3]
+ 1 file changed, 106 insertions(+), 90 deletions(-)
+
+[START commit][author=saminb][time=1638404329][message=update][hash=02dc70e99761aca75b58277b62e1c64d6d1f1ab7]
+ 18 files changed, 120 insertions(+), 62 deletions(-)
+
+[START commit][author=saminb][time=1638404289][message=bug fixes and updated files][hash=7134aca82da58ee4c656ea0564d01cdc737a1d43]
+ 15 files changed, 0 insertions(+), 0 deletions(-)
+
+[START commit][author=leejos5][time=1638330439][message=Bugfixed Question Database][hash=ceea5a807366ee4275f07694db77039a5c1be4cf]
+ 5 files changed, 572 insertions(+), 46 deletions(-)
+
+[START commit][author=leejos5][time=1638325092][message=Merge branch 'QuestionLog' into main: Consolidated Question GUI][hash=2ea6f0b47865b891892545e9e7ca75a53fac6e4d]
+[START commit][author=leejos5][time=1638325046][message=bugfixes][hash=9c7680675aa8fc6fcb394f7c3a1550abb620e1d1]
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+[START commit][author=saminb][time=1638322256][message=bug fix][hash=cf6e864e2eeedf14cae83021efec17261f80aee2]
+ 1 file changed, 2 insertions(+)
+
+[START commit][author=leejos5][time=1638312743][message=Created common QuestionGUI File][hash=eb66c171cb8148ee8bfbd9454f69f1d50fce71f9]
+ 9 files changed, 193 insertions(+), 41 deletions(-)
+
+[START commit][author=LoganMartinson][time=1638235454][message=Updated MazeTester][hash=9afeb0ec88ad32775af0fcf2aa1ece9fb287519a]
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+[START commit][author=LoganMartinson][time=1638235414][message=Changed Solvable method][hash=54bc9bc894783790adac07949e475bf0e1e2fa17]
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+[START commit][author=leejos5][time=1638216508][message=Added connectivity][hash=c3c525d3d7454f56ccfde0c66d2caa9f5e391090]
+ 2 files changed, 12 insertions(+), 1 deletion(-)
+
+[START commit][author=leejos5][time=1638172158][message=More Bugfixing.][hash=c7ad59beedab10eb6243ec285cc62042c8d60ed3]
+ 5 files changed, 43 insertions(+), 34 deletions(-)
+
+[START commit][author=leejos5][time=1638162373][message=Cleaned up question GUI][hash=6136908282b39863286bf62dd5a5ad1d950207e0]
+ 6 files changed, 60 insertions(+), 23 deletions(-)
+
+[START commit][author=LoganMartinson][time=1637981785][message=Made updates to MazeFrame. Game can now be saved.][hash=64263366a8a6936685c40c2d8edf9d66ea1dd926]
+ 1 file changed, 230 insertions(+), 135 deletions(-)
+
+[START commit][author=LoganMartinson][time=1637977323][message=Made Maze serializable][hash=743809da34c8eba69c4ee512c3b84edb8531c7a0]
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+[START commit][author=saminb][time=1637952772][message=new Update][hash=55318c2d0bfb98f230857a14231c1093648d73c5]
+ 1 file changed, 13 insertions(+), 11 deletions(-)
+
+[START commit][author=leejos5][time=1637763433][message=Fixed merge issues.][hash=2dc5e90b87d830cb080501d4a442605f0aecb5dd]
+[START commit][author=leejos5][time=1637763257][message=Bugfixing the Question classes.][hash=95ff648790d7c97468115eba82d9df2810dede04]
+ 3 files changed, 57 insertions(+), 5 deletions(-)
+
+[START commit][author=saminb][time=1637729235][message=questionlog functionality][hash=21680b5c4be79a38868a1e8e173c6bea51af637e]
+ 6 files changed, 63 insertions(+), 38 deletions(-)
+
+[START commit][author=saminb][time=1637702911][message=Merge branch 'main' of https://github.com/saminb/TriviaMaze][hash=dbb4f29cc6e3b97b7442acc118a247f929d08555]
+[START commit][author=saminb][time=1637702894][message=questionLog created][hash=3e59a8f77023b8f8f6f8b41516fe5ae612e9d15a]
+ 3 files changed, 48 insertions(+)
+
+[START commit][author=LoganMartinson][time=1637646398][message=Added MazeFrame and all Graphics files][hash=140879018085279fa8596bed6cc610a4f4faf300]
+ 15 files changed, 404 insertions(+)
+
+[START commit][author=LoganMartinson][time=1637646345][message=Simplified MazeGUI][hash=5f9a5065c566480dcceb8a92e0cc96fd69f35185]
+ 1 file changed, 4 insertions(+), 121 deletions(-)
+
+[START commit][author=leejos5][time=1637598255][message=Added more functionality to Question GUI tester][hash=c627d98897e03c2e2bc09f13e19ccf59873db778]
+ 6 files changed, 116 insertions(+), 57 deletions(-)
+
+[START commit][author=leejos5][time=1637595771][message=Bugfixed Question GUI, added Javadoc for clarity.][hash=a9c71af4eeae2764e07ff7412ac4ff8f99555646]
+ 10 files changed, 223 insertions(+), 81 deletions(-)
+
+[START commit][author=leejos5][time=1637568009][message=Uploaded question-speciic type GUI.][hash=13394760db4e949887d0515d8314c91d305b077d]
+ 11 files changed, 258 insertions(+), 35 deletions(-)
+
+[START commit][author=saminb][time=1637371430][message=updated files][hash=3064a4305b9a0f5a28ef84b38a23811c2b61ca32]
+ 8 files changed, 328 insertions(+)
+
+[START commit][author=saminb][time=1637368419][message=Delete trivia_maze_main.db][hash=86954b8ec50befa1b5da03fd63c388461fc83b63]
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+[START commit][author=saminb][time=1637368413][message=Delete ShortAnswer.java][hash=554f46db8979e781e1a36be24b608180038792e9]
+ 1 file changed, 30 deletions(-)
+
+[START commit][author=saminb][time=1637368407][message=Delete TrueFalse.java][hash=215881003da9351dd4d2f7da2d239ca7804dcd26]
+ 1 file changed, 45 deletions(-)
+
+[START commit][author=saminb][time=1637368401][message=Delete Question.java][hash=26d4458ffd7f6b03187bf1513a0cbc5b3cd48694]
+ 1 file changed, 50 deletions(-)
+
+[START commit][author=saminb][time=1637368395][message=Delete dbConnection.java][hash=d55a79b7c4a457b61e0da18978a7ccd6ab0df166]
+ 1 file changed, 22 deletions(-)
+
+[START commit][author=saminb][time=1637368388][message=Delete sqlite-jdbc-3.34.0.jar][hash=b5b7520f510c1c0b336572594d2c72dd0e6c88b8]
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+[START commit][author=saminb][time=1637368379][message=Delete MultipleChoice.java][hash=79d7128c725f724c83debc0294fb1f1edc634a46]
+ 1 file changed, 40 deletions(-)
+
+[START commit][author=saminb][time=1637368360][message=Delete Database.java][hash=031a29d848e6d0c932f60763301261b34eff661b]
+ 1 file changed, 100 deletions(-)
+
+[START commit][author=saminb][time=1637344231][message=Update TrueFalse.java][hash=0205910ffc4239eed22c298293766ca55f3460c9]
+ 1 file changed, 2 deletions(-)
+
+[START commit][author=saminb][time=1637344214][message=Update ShortAnswer.java][hash=64d57e46947269d842d58d71e75c38a4f703dd67]
+ 1 file changed, 2 deletions(-)
+
+[START commit][author=saminb][time=1637344193][message=Update Question.java][hash=0cffe76aa0b1d341fe6f8f9ab63de1f7af43722f]
+ 1 file changed, 2 deletions(-)
+
+[START commit][author=saminb][time=1637344180][message=Update MultipleChoice.java][hash=66b5dcc1f1ac9f38da045d7bad9568efd871b904]
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+[START commit][author=saminb][time=1637344170][message=Update dbConnection.java][hash=9cc27f9ed15fe8c51acfad9541fc119afc10783b]
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+[START commit][author=saminb][time=1637344140][message=Update Database.java][hash=663a5dee40abc26b3542df5c344ba383cda18396]
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+[START commit][author=saminb][time=1637286814][message=Merge pull request #2 from saminb/saminb-database-questions][hash=7e5d905b72e14804a738c31dc6d87f281c46ae5e]
+[START commit][author=saminb][time=1637286799][message=Database and Questions][hash=ec8b3c292d2bbb4ff41cdf0b3d713b6a3dcc6fa4]
+ 6 files changed, 296 insertions(+)
+
+[START commit][author=saminb][time=1637286600][message=Merge pull request #1 from saminb/saminb-database-input][hash=bfc7a2a5c5e305f76afe82b90eb0d061522a8274]
+[START commit][author=saminb][time=1637286543][message=Add files via upload][hash=f44d219debadaa4ea6e2dc9e72974b88111b38eb]
+[START commit][author=LoganMartinson][time=1637255100][message=Made minor changes to MazeTester][hash=57f4abe4edc7146a4b08ae968e8175a0d3e3a229]
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+[START commit][author=LoganMartinson][time=1637255012][message=Made minor changes to Maze][hash=70342b512975ae64d622a2d2d8841212084847b6]
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+[START commit][author=saminb][time=1637106080][message=Database and SQLite jar file][hash=cc49472a994314aa333d405f1e78f15adb282146]
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+[START commit][author=saminb][time=1636142842][message=Initial Maze GUI][hash=bc42da680fdd2d72ddbcf33685a46083de9971b1]
+ 1 file changed, 122 insertions(+)
+
+[START commit][author=LoganMartinson][time=1636140812][message=Added first draft of Maze and MazeTester classes][hash=71fa38a7b628527558d18396e8f7dba7c7826790]
+ 2 files changed, 326 insertions(+)
+
+[START commit][author=saminb][time=1636139895][message=Initial commit][hash=8befb705d7145e9a49948f8c5781d4fc35b1b5b4]
+ 1 file changed, 1 insertion(+)
