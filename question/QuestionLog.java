@@ -63,8 +63,6 @@ public class QuestionLog {
         myLogTable.setAutoCreateColumnsFromModel(true);
     	this.myQTableModel.addRow(theData);
         myLogTable.setModel(this.myQTableModel);
-        System.out.println("data is now added to the qTable");
-        System.out.println(this.myQTableModel.getDataVector());
     }   
  
     /**

@@ -152,7 +152,6 @@ public class QuestionGUI {
 				} else {
 					answer = "" + group.getSelection().getActionCommand().charAt(0);
 				}
-				System.out.println("Your answer: " + answer);
 				boolean isCorrect = theQuestion.processAnswer(answer);
 				showAnswerGUI(isCorrect, theQuestion);
 				restartFrameForAnswer();	

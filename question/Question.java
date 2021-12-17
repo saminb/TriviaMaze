@@ -129,7 +129,6 @@ public class Question {
 	 * @return true if the answer is correct, false otherwise.
 	 */
 	public boolean processAnswer(String theAnswer) {
-		System.out.println(this.getAnswer());
 		if (theAnswer.equalsIgnoreCase(this.getAnswer())) {
 			this.setAnsweredResult(true);
 			return true;
@@ -148,7 +147,6 @@ public class Question {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
